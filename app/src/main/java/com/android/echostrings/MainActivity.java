@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 
 import com.android.echostrings.fragments.LearnPageFragment;
 import com.android.echostrings.fragments.SelfPageFragment;
@@ -21,6 +22,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*
+         * 去除顶部状态栏
+         */
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         initView();
         loadInitialFragment(); // Load the initial fragment on startup

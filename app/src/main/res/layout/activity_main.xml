@@ -21,5 +21,7 @@
         android:layout_width="match_parent"
         app:menu="@menu/main_page_bottom_negative"
         app:labelVisibilityMode="unlabeled"
-        android:layout_height="55dp" />
+        android:padding="0dp"
+        app:itemActiveIndicatorStyle="@color/mainColor"
+        android:layout_height="50dp" />
 </RelativeLayout>

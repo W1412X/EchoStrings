@@ -33,7 +33,7 @@
                     android:layout_marginTop="2dp"
                     android:layout_width="30dp"
                     android:layout_height="8px"
-                    android:background="#fdb904"/>
+                    android:background="@drawable/radius_bar"/>
             </LinearLayout>
             <LinearLayout
                 android:paddingLeft="10dp"
@@ -51,7 +51,7 @@
                     android:layout_marginTop="2dp"
                     android:layout_width="30dp"
                     android:layout_height="8px"
-                    android:background="#fdb904"/>
+                    android:background="@drawable/radius_bar"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_weight="1"

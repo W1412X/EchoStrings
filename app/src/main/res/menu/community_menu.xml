@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- 搜索按钮 -->
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/search"
+        android:title="搜索"
+        app:showAsAction="ifRoom"
+        app:iconTint="@color/white"/>
+
+    <!-- 新帖按钮 -->
+    <item
+        android:id="@+id/action_new_post"
+        android:icon="@drawable/add_four"
+        android:title="发新帖"
+        app:showAsAction="ifRoom"
+        app:iconTint="@color/white"/>
+
+    <item
+        android:id="@+id/action_my_posts"
+        android:icon="@drawable/_bill"
+        android:title="我的帖子"
+        app:showAsAction="ifRoom"
+        app:iconTint="@color/white"/>
+
+    <item
+        android:id="@+id/action_favorites"
+        android:icon="@drawable/star"
+        android:title="我的收藏"
+        app:showAsAction="ifRoom"
+        app:iconTint="@color/white"/>
+
+    <item
+        android:id="@+id/action_events"
+        android:icon="@drawable/_flag"
+        android:title="活动通知"
+        app:showAsAction="ifRoom"
+        app:iconTint="@color/white"/>
+
+
+    <item
+        android:id="@+id/action_mentorship"
+        android:icon="@drawable/people"
+        android:title="师徒管理"
+        app:showAsAction="ifRoom"
+        app:iconTint="@color/white"/>
+
+</menu>

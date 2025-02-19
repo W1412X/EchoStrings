@@ -14,52 +14,57 @@
             android:background="#00000000"
             android:orientation="vertical"
             android:gravity="bottom">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="@drawable/tmp4"
-                android:orientation="vertical"
-                android:layout_weight="1">
+                android:orientation="vertical">
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#00000000"
-                    android:text="弦音拾梦"
                     android:gravity="left"
                     android:padding="10dp"
-                    android:textSize="25sp"
+                    android:text="弦音拾梦"
                     android:textColor="#881c1c1c"
-                    android:textStyle="bold"/>
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
             </LinearLayout>
+
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="70dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/teach_page_music_button"
                 android:text="曲谱学习"
-                android:textStyle="bold"
-                android:textSize="25sp"
                 android:textColor="#ffffff"
-                android:layout_margin="5dp"
-                android:background="@drawable/teach_page_music_button"/>
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="67dp"
+                android:layout_margin="5dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/teach_page_chord_button"
                 android:text="和弦学习"
-                android:textStyle="bold"
-                android:textSize="25sp"
-                android:layout_margin="5dp"
                 android:textColor="#ffffff"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/teach_page_chord_button"/>
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:text="基础学习"
+                android:layout_height="59dp"
                 android:layout_margin="5dp"
-                android:textStyle="bold"
-                android:textSize="25sp"
-                android:textColor="#1c1c1c"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/teach_page_base_button"/>
+                android:background="@drawable/teach_page_base_button"
+                android:text="基础学习"
+                android:textColor="#1c1c1c"
+                android:textSize="25sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </RelativeLayout>
 </FrameLayout>

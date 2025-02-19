@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gray">
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/green_200"
+        android:layout_alignParentTop="true"
+        app:title="视频课程"
+        app:titleTextColor="@color/white">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_settings"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:padding="8dp"
+            app:icon="@drawable/search"
+            app:iconTint="@color/white"
+            app:iconSize="36dp"
+            app:iconPadding="0dp"
+            android:contentDescription="搜索按钮"
+            app:backgroundTint="@android:color/transparent"/>
+    </com.google.android.material.appbar.MaterialToolbar>
+    <TextView
+        android:id="@+id/first"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="学习数据"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        />
+
+</RelativeLayout>

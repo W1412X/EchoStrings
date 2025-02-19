@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.SPF2">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+<androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray1">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/green_200"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="个人主页"
+            app:titleTextColor="@color/white">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_settings"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:padding="8dp"
+                app:icon="@drawable/setting"
+                app:iconTint="@color/white"
+                app:iconSize="36dp"
+                app:iconPadding="0dp"
+                android:contentDescription="设置按钮"
+                app:backgroundTint="@android:color/transparent"/>
+        </com.google.android.material.appbar.MaterialToolbar>
+
+
+        <!-- 个人信息卡片 -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/profile_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            app:cardCornerRadius="16dp"
+            android:layout_marginTop="8dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@color/gray1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            tools:ignore="NotSibling">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+                <!-- 用户头像 -->
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_avatar"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/bottom_icon_self_unselected"
+                    app:civ_border_color="@color/white"
+                    app:civ_border_width="2dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!-- 用户信息 -->
+                <TextView
+                    android:id="@+id/tv_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@id/iv_avatar"
+                    app:layout_constraintTop_toTopOf="@id/iv_avatar"
+                    tools:text="吉他小王子" />
+
+                <!-- 等级徽章 -->
+                <TextView
+                    android:id="@+id/tv_level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/green_200"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="2dp"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="@id/tv_username"
+                    app:layout_constraintTop_toBottomOf="@id/tv_username"
+                    tools:text="Lv.12 指弹达人" />
+
+                <!-- 社交数据 -->
+                <LinearLayout
+                    android:id="@+id/social_stats_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_avatar">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:id="@+id/tv_following"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="356" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="关注"
+                            android:textColor="@color/black"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tv_following" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="24dp"
+                        android:layout_marginHorizontal="16dp"
+                        android:background="@color/gray1" />
+
+
+                    <!-- 粉丝数布局 -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:id="@+id/tv_followers"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="250" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="粉丝"
+                            android:textColor="@color/black"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tv_followers" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!-- 竖线分隔符 -->
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="24dp"
+                        android:layout_marginHorizontal="16dp"
+                        android:background="@color/gray1" />
+
+                    <!-- 帖子数布局 -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:id="@+id/tv_posts"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="120" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="帖子"
+                            android:textColor="@color/black"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tv_posts" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </LinearLayout>
+
+                <!-- 编辑资料按钮 -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_edit_profile"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="编辑个人资料"
+                    android:textColor="@color/white"
+                    app:backgroundTint="@color/green_200"
+                    app:icon="@drawable/_editor"
+                    app:iconTint="@color/white"
+                    app:layout_constraintTop_toBottomOf="@id/social_stats_layout"
+                    app:strokeColor="@color/green_200"
+                    tools:ignore="UnknownId" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 学习数据统计 -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/learning_stats_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardBackgroundColor="@color/gray1"
+            app:layout_constraintTop_toBottomOf="@id/post">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="学习数据"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+
+                    <ProgressBar
+                        style="@style/Widget.Material3.CircularProgressIndicator.Small"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:progress="60"
+                        app:indicatorColor="@color/yello_200"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="当前课程进度：60%"
+                        android:textColor="@color/yello_200"/>
+                </LinearLayout>
+
+                <Space android:layout_height="8dp" android:layout_width="0dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="128小时\n总练习时长"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="36首\n掌握曲目"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="98%\n准确率"/>
+
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="成就徽章"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+<!--                        &lt;!&ndash; 徽章示例 &ndash;&gt;-->
+<!--                        <ImageView-->
+<!--                            android:layout_width="64dp"-->
+<!--                            android:layout_height="64dp"-->
+<!--                            android:layout_marginEnd="8dp"-->
+<!--                            android:src="@drawable/badge_daily_practice" />-->
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="64dp"-->
+<!--                            android:layout_height="64dp"-->
+<!--                            android:layout_marginEnd="8dp"-->
+<!--                            android:src="@drawable/badge_speed_master" />-->
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
+
+
+
+
+        <LinearLayout
+            android:id="@+id/post"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:weightSum="3"
+            tools:ignore="MissingConstraints"
+            app:layout_constraintTop_toBottomOf="@id/profile_card"
+            >
+
+            <!-- 我的投稿按钮 -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/posts"
+                style="@style/QuickAccessButton"
+                android:text="投稿"
+                app:icon="@drawable/_bill"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"/>
+
+            <!-- 点赞按钮 -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/likes"
+                style="@style/QuickAccessButton"
+                android:text="喜欢"
+                app:icon="@drawable/like"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"/>
+
+            <!-- 关注按钮 -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/attention"
+                style="@style/QuickAccessButton"
+                android:text="关注"
+                app:icon="@drawable/people"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"/>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
+    </RelativeLayout>
+</FrameLayout>

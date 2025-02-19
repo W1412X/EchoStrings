@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.SPF">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gray">
+
+    <!-- 顶部标题栏 -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/green_200"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="社区"
+        app:titleTextColor="@color/white"
+
+        app:menu="@menu/community_menu"/>
+
+    <!-- 轮播显示区域 -->
+
+    <!-- 轮播指示器 -->
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/bannerViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="12dp"
+        android:clipToPadding="false"
+        android:paddingHorizontal="32dp"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        tools:listitem="@layout/item_activity_banner" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabDots"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:tabBackground="@drawable/selector_dot"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/bannerViewPager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+
+
+    <!-- 快速入口 -->
+    <LinearLayout
+        android:id="@+id/quickAccessLayout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/bannerViewPager"
+        android:weightSum="3">
+
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/chatButton"
+            style="@style/QuickAccessButton"
+            android:text="聊天室"
+            app:icon="@drawable/chat"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/activityButton"
+            style="@style/QuickAccessButton"
+            android:text="活动"
+            app:icon="@drawable/activity"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mentorButton"
+            style="@style/QuickAccessButton"
+            android:text="师徒"
+            app:icon="@drawable/couple"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"/>
+    </LinearLayout>
+
+    <!-- 帖子列表 -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/postRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/quickAccessLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="8dp"
+        android:paddingHorizontal="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_community_post"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
+</FrameLayout>

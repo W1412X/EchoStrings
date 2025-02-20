@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
-import android.graphics.Matrix;
 import android.graphics.SurfaceTexture;
+import android.media.MediaPlayer;
+import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.util.Size;
@@ -15,9 +17,12 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.android.echostrings.components.ChordButton;
+import com.android.echostrings.data.ChordLearnData;
 import com.google.mediapipe.components.CameraHelper;
 import com.google.mediapipe.components.CameraXPreviewHelper;
 import com.google.mediapipe.components.ExternalTextureConverter;
@@ -43,7 +48,10 @@ import java.util.List;
 import java.util.Map;
 
 public class ChordLearnActivity extends AppCompatActivity {
-    private static final String TAG = "MainActivity";
+    /**
+     * hand skeleton recognition part
+     */
+    private static final String TAG = "ChordLearnActivity";
     private static final String BINARY_GRAPH_NAME = "hand_tracking_mobile_gpu.binarypb";
     private static final String INPUT_VIDEO_STREAM_NAME = "input_video";
     private static final String OUTPUT_VIDEO_STREAM_NAME = "output_video";
@@ -88,7 +96,19 @@ public class ChordLearnActivity extends AppCompatActivity {
     private Module chord_model;
     //to update the UI
     private Handler handler;
-    private String chord_learning_now;
+
+    /**
+     * audio recognition part
+     */
+    private MediaRecorder audio_recorder;
+    private String audio_path;
+    private RelativeLayout overlay;
+
+    /**
+     *  views
+     */
+    private LinearLayout chord_btn_container;
+    private ChordButton learning_chord_btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,7 +150,7 @@ public class ChordLearnActivity extends AppCompatActivity {
                     /**
                      * judge if learning
                      */
-                    if(chord_learning_now!=null){
+                    if(learning_chord_btn!=null){
                         Log.v(TAG, "Received multi-hand landmarks packet.");
                         List<LandmarkProto.NormalizedLandmarkList> multiHandLandmarks =
                                 PacketGetter.getProtoVector(packet, LandmarkProto.NormalizedLandmarkList.parser());
@@ -139,18 +159,28 @@ public class ChordLearnActivity extends AppCompatActivity {
                          * if the predict result as same as the learning one
                          * then let user record the audio and upload the server to get the result(or maybe can use the local model)
                          */
-                        if(result==chord_learning_now){
+                        if(result==learning_chord_btn.getChord()){
                             handler.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(ChordLearnActivity.this,"识别成功",Toast.LENGTH_SHORT).show();
+                                    learning_chord_btn.setSkeletonState(true);
                                 }
                             });
                         }
                     }
                 });
         loadSkeletonClassifyModel(null);
+
+        /**
+         * set the audio part
+         */
+        //PermissionHelper.checkAndRequestAudioPermissions(this);
+        audio_path=getExternalFilesDir(Environment.DIRECTORY_MUSIC)+"/chord_audio_now.wav";
+        Toast.makeText(ChordLearnActivity.this,audio_path,Toast.LENGTH_SHORT).show();
+        chord_btn_container=findViewById(R.id.chord_btn_container);
+        initChordBtn();
     }
+
 
     @Override
     protected void onResume() {
@@ -306,8 +336,8 @@ public class ChordLearnActivity extends AppCompatActivity {
         AssetManager assetManager = getAssets();
         // try to load the model
         try {
-            InputStream inputStream = assetManager.open(chord+"_model.pt");
-            File modelFile = new File(getCacheDir(), chord+"_model.pt");
+            InputStream inputStream = assetManager.open(chord+"_skeleton_model.pt");
+            File modelFile = new File(getCacheDir(), chord+"_skeleton_model.pt");
             FileOutputStream outputStream = new FileOutputStream(modelFile);
 
             byte[] buffer = new byte[4096];
@@ -318,7 +348,7 @@ public class ChordLearnActivity extends AppCompatActivity {
             outputStream.close();
             inputStream.close();
             chord_model = Module.load(modelFile.getAbsolutePath());
-            Toast.makeText(ChordLearnActivity.this,"加载成功",Toast.LENGTH_SHORT).show();
+            Toast.makeText(ChordLearnActivity.this,"加载模型成功",Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             Toast.makeText(ChordLearnActivity.this,"加载模型失败",Toast.LENGTH_SHORT).show();
         }
@@ -327,11 +357,60 @@ public class ChordLearnActivity extends AppCompatActivity {
         //set the class
         switch (chord){
             case "c":
-                chord_classes.add("C");chord_classes.add("Dm");chord_classes.add("Em");chord_classes.add("F");chord_classes.add("G");chord_classes.add("Am");
+                chord_classes.add("c");chord_classes.add("dm");chord_classes.add("em");chord_classes.add("f");chord_classes.add("g");chord_classes.add("am");
+                break;
             default:
                 Toast.makeText(ChordLearnActivity.this,"未添加和弦",Toast.LENGTH_SHORT).show();
         }
 
         //
     }
+
+    private void initChordBtn(){
+        for(int i=0;i<ChordLearnData.getMajors().size();i++){
+            String major=ChordLearnData.getMajors().get(i);
+            for(int u=0;u<ChordLearnData.getChords(major).size();u++){
+                String chord=ChordLearnData.getChords(major).get(u);
+                ChordButton btn=new ChordButton(ChordLearnActivity.this,audio_recorder,audio_path,major,chord);
+                btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        btn.externalClick();
+                        /**
+                         * if clicked and used to be closed
+                         * user learn this chord
+                         */
+                        if(btn.getSelectState()){
+                            learning_chord_btn=btn;
+                            for(int i=0;i<chord_btn_container.getChildCount();i++){
+                                if(!((ChordButton)chord_btn_container.getChildAt(i)).getSelectState()){
+                                    /**
+                                     *  if unselected
+                                     *  then set the skeleton state to false
+                                     */
+                                    ((ChordButton)chord_btn_container.getChildAt(i)).setSkeletonState(false);
+                                }else if(((ChordButton)chord_btn_container.getChildAt(i))!=learning_chord_btn){
+                                    /**
+                                     * if selected as well as the btn is not the clicked btn
+                                     * call click to close it
+                                     */
+                                    ((ChordButton)chord_btn_container.getChildAt(i)).externalClick();
+                                }
+                            }
+                        }
+                        /**
+                         * else user just want to close it
+                         * set the learning btn to null
+                         */
+                        else{
+                            learning_chord_btn=null;
+                        }
+
+                    }
+                });
+                chord_btn_container.addView(btn);
+            }
+        }
+    }
+    
 }

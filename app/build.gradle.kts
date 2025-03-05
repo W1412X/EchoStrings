@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId = "com.android.echostrings"
-        minSdk = 24
+        minSdk = 31
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -57,11 +57,8 @@ dependencies {
     //pytorch
     implementation("org.pytorch:pytorch_android:2.1.0")
     implementation("org.pytorch:pytorch_android_torchvision:2.1.0")
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation ("com.github.bumptech.glide:glide:4.12.0")
-
-
-
+    //mfcc
+    implementation("be.tarsos.dsp:core:2.5")
+    implementation("be.tarsos.dsp:jvm:2.5")
 
 }

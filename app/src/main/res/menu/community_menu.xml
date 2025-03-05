@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- 搜索按钮 -->
+
     <item
         android:id="@+id/action_search"
         android:icon="@drawable/search"
@@ -10,10 +10,10 @@
         app:showAsAction="ifRoom"
         app:iconTint="@color/white"/>
 
-    <!-- 新帖按钮 -->
+
     <item
         android:id="@+id/action_new_post"
-        android:icon="@drawable/add_four"
+        android:icon="@drawable/add"
         android:title="发新帖"
         app:showAsAction="ifRoom"
         app:iconTint="@color/white"/>

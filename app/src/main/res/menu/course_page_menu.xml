@@ -1,0 +1,23 @@
+<!-- res/menu/menu_main.xml -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_recommend"
+        android:title="推荐"
+        app:showAsAction="always" />  <!-- 始终显示在 Toolbar 上 -->
+
+    <item
+        android:id="@+id/menu_beginner"
+        android:title="初级"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_advanced"
+        android:title="高阶"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/menu_play"
+        android:title="指弹"
+        app:showAsAction="always" />
+</menu>

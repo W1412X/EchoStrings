@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Toolbar -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/green_200"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_settings"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:contentDescription="返回按钮"
+            android:padding="8dp"
+            app:backgroundTint="@android:color/transparent"
+            app:icon="@drawable/_left"
+            app:iconPadding="0dp"
+            app:iconSize="36dp"
+            app:iconTint="@color/white" />
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <LinearLayout
+        android:layout_width="423dp"
+        android:layout_height="820dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        tools:ignore="MissingConstraints">
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/image_button"
+            android:layout_width="129dp"
+            android:layout_height="127dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/gray1"
+            app:backgroundTint="@color/gray1"
+            android:contentDescription="选择图片或视频"
+            android:onClick="openGallery"
+            android:padding="0dp"
+            app:icon="@drawable/add"
+            app:iconSize="130dp"
+            app:iconTint="@color/gray"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+        <EditText
+            android:id="@+id/title_input"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/green_200"
+            android:focusable="true"
+            android:hint="写标题"
+            android:inputType="text"
+            android:padding="8dp"
+            android:textSize="16sp" />
+
+        <!-- Text Input Section -->
+        <EditText
+            android:id="@+id/text_input"
+            android:layout_width="match_parent"
+            android:layout_height="126dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/white"
+            android:focusable="true"
+            android:hint="写内容"
+            android:inputType="textMultiLine"
+            android:padding="8dp"
+            android:textSize="16sp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/tag_location_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:text="标签"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+
+        </LinearLayout>
+
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/location_chip_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+
+
+            android:orientation="horizontal">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/location_chip_1"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#F5F5F5"
+                android:backgroundTint="#F5F5F5"
+                android:checkable="true"
+
+                android:text="标签1"
+                android:textColor="@color/gray"
+                app:chipStrokeColor="@color/green_200" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/location_chip_2"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#F5F5F5"
+
+                android:backgroundTint="#F5F5F5"
+                android:checkable="true"
+
+
+                android:text="标签 2"
+                android:textColor="@color/gray" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/location_chip_3"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#F5F5F5"
+
+                android:checkable="true"
+
+
+                android:text="标签 3"
+                android:textColor="@color/gray" />
+        </com.google.android.material.chip.ChipGroup>
+
+
+        <TextView
+            android:id="@+id/private_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:text="隐私设置"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+
+        <CheckBox
+            android:id="@+id/public_checkbox"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="0dp"
+            android:text="我已阅读并接受《弦音拾梦公约》"
+            android:textColor="@color/green_200"
+            android:textSize="16sp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/draft_button"
+                android:layout_width="127dp"
+                android:layout_height="60dp"
+                android:layout_marginEnd="16dp"
+                android:backgroundTint="@color/green_200"
+                android:text="存草稿"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/post_button"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:backgroundTint="@color/yello_200"
+                android:text="发布"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -37,10 +37,16 @@ public class ActivityBannerAdapter extends RecyclerView.Adapter<ActivityBannerAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ActivityItem item = items.get(position % items.size());
 
+        ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
+        if (layoutParams != null) {
+            layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+            layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+            holder.itemView.setLayoutParams(layoutParams);
+        }
         // 绑定数据示例
         holder.tvTitle.setText(item.getTitle());
         holder.tvTime.setText(item.getTime());
-        holder.tvParticipants.setText("已参与 " + item.getParticipants() + " 人");
+
 
         // 加载封面图（使用Glide）
         Glide.with(holder.itemView)
@@ -53,7 +59,7 @@ public class ActivityBannerAdapter extends RecyclerView.Adapter<ActivityBannerAd
 
     @Override
     public int getItemCount() {
-        return Integer.MAX_VALUE; // 实现无限循环
+        return items.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

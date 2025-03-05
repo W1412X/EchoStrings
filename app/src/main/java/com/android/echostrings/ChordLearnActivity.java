@@ -1,7 +1,8 @@
 package com.android.echostrings;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+import com.android.echostrings.R;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
@@ -15,6 +16,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -91,6 +93,7 @@ public class ChordLearnActivity extends AppCompatActivity {
     private String chord_learning_now;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chord_learn);
         try {

@@ -1,14 +1,15 @@
 package com.android.echostrings;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Window;
+
 
 import com.android.echostrings.fragments.LearnPageFragment;
 import com.android.echostrings.fragments.SelfPageFragment;
@@ -28,13 +29,15 @@ public class MainActivity extends AppCompatActivity {
          */
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+//        Toolbar toolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
         initView();
         loadInitialFragment(); // Load the initial fragment on startup
 
         /**
          * test for the ChordLearnActivity
          */
-        startActivity(new Intent(MainActivity.this,ChordLearnActivity.class));
+//        startActivity(new Intent(MainActivity.this,ChordLearnActivity.class));
     }
     void initView(){
         // Initialize the bottom navigation view
@@ -43,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             fragmentManager = getSupportFragmentManager();
             fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.hide(last_fragment);
+//            fragmentTransaction.hide(last_fragment);
             Fragment selectedFragment = null;
             if (item.getItemId() == R.id.menu_teach) {
                 selectedFragment = fragmentManager.findFragmentByTag("LearnPage");
@@ -63,6 +66,9 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment = new SharePageFragment();
                     fragmentTransaction.add(R.id.main_fragment_container, selectedFragment, "SharePage");
                 }
+            }
+            if (selectedFragment != last_fragment) {
+                fragmentTransaction.hide(last_fragment);
             }
             last_fragment=selectedFragment;
             fragmentTransaction.show(selectedFragment);

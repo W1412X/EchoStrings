@@ -63,5 +63,11 @@ dependencies {
     //mfcc
     implementation("be.tarsos.dsp:core:2.5")
     implementation("be.tarsos.dsp:jvm:2.5")
-
+    //alphatab
+    implementation("net.alphatab:alphaTab-android:1.3.0")
+    //network
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    //html deal
+    implementation("org.jsoup:jsoup:1.15.4")
 }

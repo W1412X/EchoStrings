@@ -48,50 +48,6 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/btn_recognize_sound"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="@color/green_200"
-                app:cardElevation="4dp">
-
-                <LinearLayout
-                    android:layout_width="395dp"
-                    android:layout_height="94dp"
-                    android:orientation="horizontal"
-                    android:padding="16dp">
-
-                    <ImageView
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        android:src="@drawable/guitar" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="识音识谱"
-                            android:textColor="@color/white"
-                            android:textSize="20sp" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="乐理学习 | AI调音 | 音高识别"
-                            android:textColor="@color/white" />
-                    </LinearLayout>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/btn_AI_correct"
                 android:layout_width="match_parent"
@@ -128,14 +84,13 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="手势校正 | 精准度检测 | 进度追踪"
+                            android:text="手势校正 | 和弦练习 "
                             android:textColor="@color/white" />
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
-
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/btn_video_class"
+                android:id="@+id/btn_recognize_sound"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -143,15 +98,15 @@
                 app:cardElevation="4dp">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="395dp"
+                    android:layout_height="94dp"
                     android:orientation="horizontal"
                     android:padding="16dp">
 
                     <ImageView
                         android:layout_width="64dp"
                         android:layout_height="64dp"
-                        android:src="@drawable/music_sheet" />
+                        android:src="@drawable/guitar" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -162,7 +117,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="视频课程"
+                            android:text="曲谱练习"
                             android:textColor="@color/white"
                             android:textSize="20sp" />
 
@@ -170,13 +125,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="分阶段课程 | 慢放学习 | 语音问答"
+                            android:text="吉他调音 | 弹奏分析 "
                             android:textColor="@color/white" />
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
-
-
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/btn_create"
                 android:layout_width="match_parent"
@@ -205,7 +158,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="曲谱创作"
+                            android:text="智能创作"
                             android:textColor="@color/white"
                             android:textSize="20sp" />
 
@@ -213,13 +166,51 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="创作曲谱 | 海量曲谱 | AI作谱"
+                            android:text="曲谱创作教学 | 智能曲谱创作"
                             android:textColor="@color/white" />
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/btn_video_class"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/green_200"
+                app:cardElevation="4dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
 
+                    <ImageView
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:src="@drawable/music_sheet" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="视频课程"
+                            android:textColor="@color/white"
+                            android:textSize="20sp" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="教学课程 | 语音问答"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="170dp"

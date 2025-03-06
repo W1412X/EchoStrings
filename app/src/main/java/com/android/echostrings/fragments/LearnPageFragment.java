@@ -8,11 +8,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.android.echostrings.ChordLearnActivity;
 import com.android.echostrings.R;
-import com.android.echostrings.activities.AiCorrectionActivity;
 import com.android.echostrings.activities.MusicCompositionActivity;
 import com.android.echostrings.activities.RecognizeSoundActivity;
 import com.android.echostrings.activities.VideoCourseActivity;
@@ -97,7 +95,7 @@ public class LearnPageFragment extends Fragment {
 
         btnMusicComposition.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), MusicCompositionActivity.class);
-            startActivity(intent);
+            getActivity().startActivity(intent);
         });
 
         return view;

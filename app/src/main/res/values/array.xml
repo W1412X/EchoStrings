@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="guitar">
+        <item>尼龙弦吉他</item>
+        <item>钢弦吉他</item>
+        <item>爵士电吉他</item>
+        <item>清音电吉他</item>
+        <item>闷音电吉他</item>
+        <item>加驱动效果的电吉他</item>
+        <item>加失真效果的电吉他</item>
+        <item>吉他和音</item>
+    </string-array>
+    <string-array name="beat">
+        <item>30</item>
+        <item>45</item>
+        <item>60</item>
+        <item>75</item>
+        <item>90</item>
+        <item>105</item>
+        <item>120</item>
+    </string-array>
+    <string-array name="tune">
+        <item>E A D G B E</item>
+    </string-array>
+    <string-array name="time">
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+        <item>30</item>
+        <item>35</item>
+        <item>40</item>
+        <item>45</item>
+        <item>50</item>
+        <item>55</item>
+        <item>60</item>
+    </string-array>
+</resources>

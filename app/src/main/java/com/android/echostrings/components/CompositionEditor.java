@@ -106,16 +106,17 @@ public class CompositionEditor  extends LinearLayout {
                     Toast.makeText(context,"请输入内容",Toast.LENGTH_SHORT).show();
                     return;
                 }
-                addMessage(message_input.getText().toString(),"right");
                 progress.setVisibility(View.VISIBLE);
+                String message=message_input.getText().toString();
+                addMessage(message_input.getText().toString(),"right");
                 message_input.setText("");
                 /**
                  * get the response from server
                  */
                 OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                        .connectTimeout(5, java.util.concurrent.TimeUnit.SECONDS)
-                        .writeTimeout(5, java.util.concurrent.TimeUnit.SECONDS)
-                        .readTimeout(5, java.util.concurrent.TimeUnit.SECONDS)
+                        .connectTimeout(600, java.util.concurrent.TimeUnit.SECONDS)
+                        .writeTimeout(600, java.util.concurrent.TimeUnit.SECONDS)
+                        .readTimeout(600, java.util.concurrent.TimeUnit.SECONDS)
                         .build();
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl("http://10.102.33.19:8000")
@@ -124,7 +125,8 @@ public class CompositionEditor  extends LinearLayout {
                         .build();
 
                 ApiService apiService = retrofit.create(ApiService.class);
-                ChatRequest chatRequest = new ChatRequest(1001, message_input.getText().toString());
+                ChatRequest chatRequest = new ChatRequest("1001", message);
+                Log.i("message",message_input.getText().toString());
                 Call<ChatResponse> call = apiService.sendMessage(chatRequest);
                 call.enqueue(new Callback<ChatResponse>() {
                     @Override

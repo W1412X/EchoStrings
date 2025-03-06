@@ -110,9 +110,9 @@ public class MusicCompositionActivity extends ComponentActivity {
                  * get the response from server
                  */
                 OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                        .connectTimeout(5, java.util.concurrent.TimeUnit.SECONDS)
-                        .writeTimeout(5, java.util.concurrent.TimeUnit.SECONDS)
-                        .readTimeout(5, java.util.concurrent.TimeUnit.SECONDS)
+                        .connectTimeout(600, java.util.concurrent.TimeUnit.SECONDS)
+                        .writeTimeout(600, java.util.concurrent.TimeUnit.SECONDS)
+                        .readTimeout(600, java.util.concurrent.TimeUnit.SECONDS)
                         .build();
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl("http://10.102.33.19:8000")
@@ -121,12 +121,14 @@ public class MusicCompositionActivity extends ComponentActivity {
                         .build();
 
                 ApiService apiService = retrofit.create(ApiService.class);
-                MusicCreateRequest musicCreateRequest = new MusicCreateRequest(1001,
+                Log.i("test",guitar_beat.getSelectedItem().toString());
+
+                MusicCreateRequest musicCreateRequest = new MusicCreateRequest("1001".toString(),
                         score_title.getText().toString(),
-                        CompositionWebData.guitar_id.get(guitar_tone.getSelectedItem().toString()),
+                        CompositionWebData.getId(guitar_tone.getSelectedItem().toString()),
                         guitar_tune.getSelectedItem().toString(),
                         guitar_beat.getSelectedItem().toString(),
-                        "测试用户",
+                        "测试用户".toString(),
                         guitar_time.getSelectedItem().toString(),
                         song_style.getText().toString());
                 Call<MusicCreateResponse> call = apiService.createMusic(musicCreateRequest);

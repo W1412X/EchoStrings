@@ -21,5 +21,5 @@ public interface ApiService {
             "Authorization: Bearer <your_token_here>"
     })
     @POST("/ai/music_creat")
-    Call<MusicCreateResponse> createMusic(@Body MusicCreateRequest musicCreatRequest);
+    Call<MusicCreateResponse> createMusic(@Body MusicCreateRequest musicCreateRequest);
 }

@@ -536,7 +536,7 @@ public class CompositionWebData {
             "</style>\n" +
             "\n";
     public static Map<String,String>guitar_id=new HashMap<>();
-    {
+    static {
         guitar_id.put("尼龙弦吉他","24");
         guitar_id.put("钢弦吉他","25");
         guitar_id.put("爵士电吉他","26");
@@ -547,7 +547,9 @@ public class CompositionWebData {
         guitar_id.put("吉他和音","31");
 
     }
-
+    public static String getId(String tone){
+        return guitar_id.get(tone);
+    }
     /**
      * need input the tex
      * @param tex

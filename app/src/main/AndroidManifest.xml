@@ -29,6 +29,9 @@
             android:name=".activities.RecognizeSoundActivity"
             android:exported="false" />
         <activity android:name=".activities.MusicCompositionActivity"></activity>
+        <activity android:name=".activities.TuneActivity">
+            <!-- 如果有特定的Intent过滤器，可以在这里添加 -->
+        </activity>
         <activity
             android:name=".ChordLearnActivity"
             android:exported="false"

@@ -1,7 +1,9 @@
 package com.android.echostrings.network.data;
 
+import android.util.Log;
+
 public class MusicCreateRequest {
-    private int user_id;
+    private String user_id;
     private String title;
     private String instr_id;
     private String tuning;
@@ -11,7 +13,7 @@ public class MusicCreateRequest {
     private String style_desc;
 
     // 构造函数
-    public MusicCreateRequest(int user_id, String title, String instr_id, String tuning, String tempo, String artist, String time, String style_desc) {
+    public MusicCreateRequest(String user_id, String title, String instr_id, String tuning, String tempo, String artist, String time, String style_desc) {
         this.user_id = user_id;
         this.title = title;
         this.instr_id = instr_id;
@@ -20,11 +22,12 @@ public class MusicCreateRequest {
         this.artist = artist;
         this.time = time;
         this.style_desc = style_desc;
+        Log.e("data",user_id+"|"+title+"|"+instr_id+"|"+tuning+"|"+tempo+"|"+artist+"|"+time+"|"+style_desc);
     }
 
     // Getter 和 Setter 方法
-    public int getUser_id() { return user_id; }
-    public void setUser_id(int user_id) { this.user_id = user_id; }
+    public String getUser_id() { return user_id; }
+    public void setUser_id(String user_id) { this.user_id = user_id; }
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
     public String getInstr_id() { return instr_id; }

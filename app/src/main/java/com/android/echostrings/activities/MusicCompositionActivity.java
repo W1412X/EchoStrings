@@ -62,6 +62,7 @@ public class MusicCompositionActivity extends ComponentActivity {
     private ImageButton setting_btn,close_setting_btn;
     private Switch beat_switch,loop_switch;
     private Button ai_create_btn,to_pdf_btn;
+    private ImageButton upload_btn;
     private String tex_now=CompositionWebData.getDefaultTex();
     private Spinner guitar_tone,guitar_tune,guitar_beat,guitar_time;
     private RelativeLayout edit_view_relative,setting_view,loading_view;
@@ -98,6 +99,18 @@ public class MusicCompositionActivity extends ComponentActivity {
         guitar_beat=findViewById(R.id.beat_spinner);
         guitar_tune=findViewById(R.id.tune_spinner);
         guitar_time=findViewById(R.id.time_spinner);
+        upload_btn=findViewById(R.id.composition_upload_btn);
+        upload_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loading_view.setVisibility(View.VISIBLE);
+                /**
+                 * upload the composition message
+                 * to do
+                 */
+                loading_view.setVisibility(View.GONE);
+            }
+        });
         ai_create_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

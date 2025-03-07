@@ -152,9 +152,11 @@
             android:textColor="@color/white"
             android:text="智能作谱"/>
         <ImageButton
+            android:id="@+id/composition_upload_btn"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:padding="5dp"
+            android:src="@drawable/icon_upload"
             android:background="@color/mainColor"
             android:scaleType="centerInside" />
     </LinearLayout>
@@ -273,6 +275,7 @@
             android:layout_height="wrap_content"/>
     </RelativeLayout>
     <RelativeLayout
+        android:visibility="gone"
         android:id="@+id/global_loading_view_relative"
         android:background="#eeffffff"
         android:gravity="center"

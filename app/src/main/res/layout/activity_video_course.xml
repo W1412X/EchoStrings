@@ -38,6 +38,7 @@
             app:layout_constraintTop_toTopOf="@id/iv_cover">
             <!-- 课程标题 -->
             <TextView
+                android:fontFamily="@font/zkklt"
                 android:id="@+id/tv_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -57,6 +58,7 @@
                 app:singleLine="true">
 
                 <com.google.android.material.chip.Chip
+                    android:fontFamily="@font/zkklt"
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -67,6 +69,7 @@
                     app:chipStrokeWidth="1dp" />
 
                 <com.google.android.material.chip.Chip
+                    android:fontFamily="@font/zkklt"
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

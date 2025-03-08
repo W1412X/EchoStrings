@@ -31,31 +31,34 @@
 
 
             <TextView
+                android:fontFamily="@font/zkklt"
                 android:id="@+id/userName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:textStyle="bold"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 tools:text="吉他爱好者小明"/>
             <TextView
+                android:fontFamily="@font/zkklt"
                 android:id="@+id/postTime"
                 tools:text="2小时前"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:textColor="@color/black"
-                android:textSize="10sp" />
+                android:textSize="12sp" />
 
         </LinearLayout>
 
         <!-- 帖子标题 -->
         <TextView
+            android:fontFamily="@font/zkklt"
             android:id="@+id/postTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:textSize="14sp"
+            android:textSize="18sp"
             tools:text="分享一个超实用的扫弦技巧！"/>
 
         <!-- 点赞和评论数 -->
@@ -81,13 +84,14 @@
                     app:tint="@color/yello_200" />
 
                 <TextView
+                    android:fontFamily="@font/zkklt"
                     android:id="@+id/likeCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     tools:text="128"
                     android:textColor="@color/yello_200"
-                    android:textSize="12sp"/>
+                    android:textSize="13sp"/>
             </LinearLayout>
 
             <!-- 评论数 -->
@@ -106,13 +110,14 @@
                     app:tint="@color/yello_200"/>
 
                 <TextView
+                    android:fontFamily="@font/zkklt"
                     android:id="@+id/commentCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     tools:text="23"
                     android:textColor="@color/yello_200"
-                    android:textSize="12sp"/>
+                    android:textSize="13sp"/>
             </LinearLayout>
 
         </LinearLayout>

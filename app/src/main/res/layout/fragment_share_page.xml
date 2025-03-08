@@ -24,7 +24,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:title="社区"
         app:titleTextColor="@color/white"
-
         app:menu="@menu/community_menu"/>
 
 
@@ -73,6 +72,8 @@
             android:id="@+id/chatButton"
             style="@style/QuickAccessButton"
             android:text="聊天室"
+            android:textSize="18sp"
+            android:fontFamily="@font/zkklt"
             app:icon="@drawable/chat"
             android:layout_weight="1"
             android:layout_marginEnd="8dp"/>
@@ -81,6 +82,8 @@
             android:id="@+id/activityButton"
             style="@style/QuickAccessButton"
             android:text="活动"
+            android:fontFamily="@font/zkklt"
+            android:textSize="18sp"
             app:icon="@drawable/activity"
             android:layout_weight="1"
             android:layout_marginEnd="8dp"/>
@@ -89,6 +92,7 @@
             android:id="@+id/mentorButton"
             style="@style/QuickAccessButton"
             android:text="师徒"
+            android:textSize="18sp"
             app:icon="@drawable/couple"
             android:layout_weight="1"
             android:layout_marginEnd="8dp"/>

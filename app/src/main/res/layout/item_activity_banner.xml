@@ -40,6 +40,7 @@
             app:layout_constraintVertical_bias="1.0" />
 
         <TextView
+            android:fontFamily="@font/zkklt"
             android:id="@+id/tv_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,7 +50,7 @@
             android:paddingHorizontal="8dp"
             android:paddingVertical="4dp"
             android:textColor="@color/yello_200"
-            android:textSize="12sp"
+            android:textSize="13sp"
             android:textStyle="bold"
             app:backgroundTint="@color/yello_200"
             app:cornerRadius="4dp"
@@ -67,13 +68,14 @@
 
             <!-- 活动标题 -->
             <TextView
+                android:fontFamily="@font/zkklt"
                 android:id="@+id/tv_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:textColor="@color/white"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 tools:text="7月弹唱大赛：周杰伦专场挑战" />
 
@@ -91,12 +93,13 @@
                     app:tint="@color/white" />
 
                 <TextView
+                    android:fontFamily="@font/zkklt"
                     android:id="@+id/tv_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:textColor="@color/white"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
                     tools:text="2023.07.01 - 2023.07.31" />
             </LinearLayout>
 
@@ -114,12 +117,13 @@
                     app:tint="@color/white" />
 
                 <TextView
+                    android:fontFamily="@font/zkklt"
                     android:id="@+id/tv_participants"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:textColor="@color/white"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
                     tools:text="已参与 1234 人" />
             </LinearLayout>
         </LinearLayout>
@@ -127,6 +131,7 @@
         <!-- 参与按钮 -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_join"
+            android:fontFamily="@font/zkklt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"

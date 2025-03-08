@@ -29,6 +29,7 @@
                 android:src="@drawable/c_chord_am"
                 android:scaleType="centerInside"/>
             <TextView
+                android:fontFamily="@font/zkklt"
                 android:id="@+id/chord_btn_little_chord_title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -58,6 +59,7 @@
                     android:src="@drawable/c_chord_am"
                     android:scaleType="centerInside"/>
                 <TextView
+                    android:fontFamily="@font/zkklt"
                     android:layout_marginTop="2dp"
                     android:id="@+id/chord_btn_skeleton_result_false"
                     android:layout_width="match_parent"
@@ -70,6 +72,7 @@
                     android:layout_marginRight="10dp"
                     android:background="@drawable/background_chord_false"/>
                 <TextView
+                    android:fontFamily="@font/zkklt"
                     android:visibility="gone"
                     android:id="@+id/chord_btn_skeleton_result_right"
                     android:layout_width="match_parent"
@@ -87,6 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
+                    android:fontFamily="@font/zkklt"
                     android:id="@+id/chord_btn_big_chord_title"
                     android:text="C大调 Am"
                     android:textSize="22sp"
@@ -94,6 +98,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="35dp"/>
                 <TextView
+                    android:fontFamily="@font/zkklt"
                     android:id="@+id/chord_btn_big_chord_press_description"
                     android:layout_width="match_parent"
                     android:text="食指按压2弦1品，中指按压4弦2品，无名指按压3弦二品。"
@@ -107,6 +112,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <TextView
+                        android:fontFamily="@font/zkklt"
                         android:id="@+id/chord_btn_big_chord_play_description"
                         android:layout_width="match_parent"
                         android:layout_weight="1"
@@ -141,6 +147,7 @@
             android:visibility="gone"
             android:id="@+id/chord_btn_overlay_text"
             android:text="5.0 s"
+            android:fontFamily="@font/zkklt"
             android:textStyle="bold"
             android:textColor="@color/green_200"
             android:textSize="40sp"
@@ -162,6 +169,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"/>
             <TextView
+                android:fontFamily="@font/zkklt"
                 android:layout_marginLeft="5dp"
                 android:text="模型识别中..."
                 android:textStyle="bold"
@@ -179,6 +187,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView
+            android:fontFamily="@font/zkklt"
             android:text="弹奏正确！"
             android:textStyle="bold"
             android:textColor="@color/white"
@@ -194,6 +203,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView
+            android:fontFamily="@font/zkklt"
             android:text="不太准，再试一次 ~"
             android:textStyle="bold"
             android:textColor="@color/white"
@@ -209,6 +219,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView
+            android:fontFamily="@font/zkklt"
             android:text="请按压准确和弦"
             android:textStyle="bold"
             android:textColor="@color/white"

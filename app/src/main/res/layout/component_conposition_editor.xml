@@ -22,11 +22,11 @@
             android:layout_margin="10dp"
             android:layout_height="wrap_content">
             <TextView
+                android:fontFamily="@font/zkklt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="编辑乐谱"
-                android:textStyle="bold"
                 android:textSize="20sp"
                 android:textColor="@color/mainColor"/>
             <ImageButton
@@ -44,6 +44,7 @@
             android:layout_height="match_parent">
             <EditText
                 android:id="@+id/tex_input"
+                android:fontFamily="@font/zkklt"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="编辑曲谱"/>
@@ -72,6 +73,7 @@
                             android:gravity="center_vertical"
                             android:layout_height="50dp">
                             <EditText
+                                android:fontFamily="@font/zkklt"
                                 android:id="@+id/chat_input"
                                 android:layout_width="350dp"
                                 android:layout_height="40dp"
@@ -108,9 +110,14 @@
                         android:gravity="center"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
-                        <ProgressBar
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"/>
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:scaleType="centerInside"
+                            android:id="@+id/lottieAnimationView"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            app:lottie_rawRes="@raw/animation_loading_main"
+                            app:lottie_loop="true"
+                            app:lottie_autoPlay="true" />
                     </RelativeLayout>
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
@@ -131,12 +138,12 @@
                 android:src="@drawable/icon_ai" />
         </RelativeLayout>
         <Button
+            android:fontFamily="@font/zkklt"
             android:id="@+id/confirm_edit_btn"
             android:text="确认编辑"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:background="@drawable/teach_page_base_button"
-            android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"

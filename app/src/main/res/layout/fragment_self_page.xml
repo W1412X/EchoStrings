@@ -79,11 +79,12 @@
 
                 <!-- 用户信息 -->
                 <TextView
+                    android:fontFamily="@font/zkklt"
                     android:id="@+id/tv_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@id/iv_avatar"
                     app:layout_constraintTop_toTopOf="@id/iv_avatar"
@@ -99,7 +100,8 @@
                     android:paddingHorizontal="8dp"
                     android:paddingVertical="2dp"
                     android:textColor="@color/white"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/zkklt"
                     app:layout_constraintStart_toStartOf="@id/tv_username"
                     app:layout_constraintTop_toBottomOf="@id/tv_username"
                     tools:text="Lv.12 指弹达人" />
@@ -124,8 +126,9 @@
                             android:id="@+id/tv_following"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="16sp"
+                            android:textSize="18sp"
                             android:textStyle="bold"
+                            android:fontFamily="@font/zkklt"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
@@ -135,6 +138,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="关注"
+                            android:fontFamily="@font/zkklt"
                             android:textColor="@color/black"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -156,10 +160,11 @@
                         android:padding="8dp">
 
                         <TextView
+                            android:fontFamily="@font/zkklt"
                             android:id="@+id/tv_followers"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="16sp"
+                            android:textSize="18sp"
                             android:textStyle="bold"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -170,6 +175,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="粉丝"
+                            android:fontFamily="@font/zkklt"
                             android:textColor="@color/black"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -193,7 +199,8 @@
                             android:id="@+id/tv_posts"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="16sp"
+                            android:textSize="18sp"
+                            android:fontFamily="@font/zkklt"
                             android:textStyle="bold"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -204,6 +211,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="帖子"
+                            android:fontFamily="@font/zkklt"
                             android:textColor="@color/black"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -221,6 +229,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="编辑个人资料"
+                    android:fontFamily="@font/zkklt"
                     android:textColor="@color/white"
                     app:backgroundTint="@color/green_200"
                     app:icon="@drawable/_editor"
@@ -249,10 +258,11 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="29dp"
+                    android:fontFamily="@font/zkklt"
                     android:text="学习数据"
-                    android:textSize="16sp"
-                    android:textStyle="bold"/>
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -268,6 +278,7 @@
                         app:indicatorColor="@color/yello_200"/>
 
                     <TextView
+                        android:fontFamily="@font/zkklt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -284,13 +295,17 @@
                     android:weightSum="3">
 
                     <TextView
+                        android:fontFamily="@font/zkklt"
                         android:layout_width="0dp"
+                        android:textSize="15sp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="128小时\n总练习时长"/>
 
                     <TextView
+                        android:fontFamily="@font/zkklt"
+                        android:textSize="15sp"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -298,6 +313,8 @@
                         android:text="36首\n掌握曲目"/>
 
                     <TextView
+                        android:fontFamily="@font/zkklt"
+                        android:textSize="15sp"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -309,6 +326,8 @@
                 </LinearLayout>
 
                 <TextView
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/zkklt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="成就徽章"
@@ -367,6 +386,7 @@
                 android:text="投稿"
                 app:icon="@drawable/_bill"
                 android:layout_weight="1"
+                android:fontFamily="@font/zkklt"
                 android:layout_marginEnd="8dp"/>
 
             <!-- 点赞按钮 -->
@@ -375,6 +395,7 @@
                 style="@style/QuickAccessButton"
                 android:text="喜欢"
                 app:icon="@drawable/like"
+                android:fontFamily="@font/zkklt"
                 android:layout_weight="1"
                 android:layout_marginEnd="8dp"/>
 
@@ -383,6 +404,7 @@
                 android:id="@+id/attention"
                 style="@style/QuickAccessButton"
                 android:text="关注"
+                android:fontFamily="@font/zkklt"
                 app:icon="@drawable/people"
                 android:layout_weight="1"
                 android:layout_marginEnd="8dp"/>

@@ -21,8 +21,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
         <androidx.appcompat.widget.Toolbar
+            android:fontFamily="@font/zkklt"
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
@@ -74,16 +74,19 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:fontFamily="@font/zkklt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="AI纠正"
                             android:textColor="@color/white"
-                            android:textSize="20sp" />
+                            android:textSize="22sp" />
 
                         <TextView
+                            android:fontFamily="@font/zkklt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
+                            android:textSize="16sp"
                             android:text="手势校正 | 和弦练习 "
                             android:textColor="@color/white" />
                     </LinearLayout>
@@ -115,17 +118,20 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:fontFamily="@font/zkklt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="曲谱练习"
                             android:textColor="@color/white"
-                            android:textSize="20sp" />
+                            android:textSize="22sp" />
 
                         <TextView
+                            android:fontFamily="@font/zkklt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="吉他调音 | 弹奏分析 "
+                            android:text="弹唱分析 | 指弹分析 "
+                            android:textSize="16sp"
                             android:textColor="@color/white" />
                     </LinearLayout>
                 </LinearLayout>
@@ -156,16 +162,19 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:fontFamily="@font/zkklt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="智能创作"
                             android:textColor="@color/white"
-                            android:textSize="20sp" />
+                            android:textSize="22sp" />
 
                         <TextView
+                            android:fontFamily="@font/zkklt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
+                            android:textSize="16sp"
                             android:text="曲谱创作教学 | 智能曲谱创作"
                             android:textColor="@color/white" />
                     </LinearLayout>
@@ -197,15 +206,19 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:fontFamily="@font/zkklt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="视频课程"
                             android:textColor="@color/white"
-                            android:textSize="20sp" />
+                            android:textSize="22sp" />
                         <TextView
+                            android:fontFamily="@font/zkklt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
+                            android:textSize="16sp"
+
                             android:text="教学课程 | 语音问答"
                             android:textColor="@color/white" />
                     </LinearLayout>
@@ -224,6 +237,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:fontFamily="@font/zkklt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="本周练习进度"
@@ -239,6 +253,7 @@
                         android:progressTint="@color/yello_200" />
 
                     <TextView
+                        android:fontFamily="@font/zkklt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"

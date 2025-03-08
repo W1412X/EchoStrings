@@ -15,13 +15,7 @@ public class RecognizeSoundActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recognize_sound);
-        tune_button=findViewById(R.id.tune_button);
-        tune_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(RecognizeSoundActivity.this,TuneActivity.class));
-            }
-        });
+
 
     }
 }

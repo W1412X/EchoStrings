@@ -26,10 +26,11 @@
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:text="进行中"
+        android:fontFamily="@font/zkklt"
         android:textColor="@android:color/white"
         android:background="@color/yello_200"
         android:gravity="center"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:visibility="visible"
         app:layout_constraintTop_toTopOf="@id/img_event_cover"
         app:layout_constraintEnd_toEndOf="@id/img_event_cover"/>
@@ -41,7 +42,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="活动标题"
-        android:textSize="16sp"
+        android:fontFamily="@font/zkklt"
+        android:textSize="18sp"
         android:textColor="#333333"
         android:maxLines="1"
         android:ellipsize="end"
@@ -51,12 +53,13 @@
 
 
     <TextView
+        android:fontFamily="@font/zkklt"
         android:id="@+id/tv_event_date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="3/1/2025 至 4/30/2025"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:textColor="#999999"
         app:layout_constraintTop_toBottomOf="@id/tv_event_title"
         app:layout_constraintStart_toStartOf="parent"

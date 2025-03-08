@@ -30,7 +30,8 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:fontFamily="@font/zkklt"
+                android:textSize="16sp"
                 tools:text="【吉他教学】快速掌握扫弦技巧的5个秘诀"
                 tools:ignore="MissingConstraints" />
 
@@ -40,7 +41,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:textColor="@color/black"
-                android:textSize="12sp"
+                android:fontFamily="@font/zkklt"
+                android:textSize="14sp"
                 app:layout_constraintTop_toBottomOf="@id/tv_title"
                 tools:text="投稿 · 2小时前" />
 
@@ -60,12 +62,13 @@
                     app:tint="@color/yello_200" />
 
                 <TextView
+                    android:fontFamily="@font/zkklt"
                     android:id="@+id/tv_likes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:textColor="@color/yello_200"
-                    android:textSize="12sp"
+                    android:textSize="13sp"
                     tools:text="1.2万" />
 
                 <ImageView
@@ -77,11 +80,12 @@
 
                 <TextView
                     android:id="@+id/tv_comments"
+                    android:fontFamily="@font/zkklt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:textColor="@color/yello_200"
-                    android:textSize="12sp"
+                    android:textSize="13sp"
                     tools:text="358" />
 
 

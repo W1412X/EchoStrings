@@ -20,16 +20,20 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
-        android:usesCleartextTraffic="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EchoStrings"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".activities.Finger"
+            android:exported="false" />
         <activity
             android:name=".activities.RecognizeSoundActivity"
             android:exported="false" />
-        <activity android:name=".activities.MusicCompositionActivity"></activity>
+        <activity android:name=".activities.MusicCompositionActivity" />
         <activity android:name=".activities.TuneActivity">
+
             <!-- 如果有特定的Intent过滤器，可以在这里添加 -->
         </activity>
         <activity

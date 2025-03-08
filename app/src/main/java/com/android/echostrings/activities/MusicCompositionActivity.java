@@ -105,6 +105,16 @@ public class MusicCompositionActivity extends ComponentActivity {
             public void onClick(View v) {
                 loading_view.setVisibility(View.VISIBLE);
                 /**
+                 * get the midi file first
+                 */
+                web.evaluateJavascript("api.downloadMidi();" +
+                        "", new ValueCallback<String>() {
+                    @Override
+                    public void onReceiveValue(String value) {
+                        Log.e("JSJS",value);
+                    }
+                });
+                /**
                  * upload the composition message
                  * to do
                  */

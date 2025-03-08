@@ -1,20 +1,28 @@
 package com.android.echostrings.fragments;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.android.echostrings.ChordLearnActivity;
+import com.android.echostrings.MainActivity;
 import com.android.echostrings.R;
 import com.android.echostrings.activities.MusicCompositionActivity;
 import com.android.echostrings.activities.RecognizeSoundActivity;
+import com.android.echostrings.activities.TuneActivity;
 import com.android.echostrings.activities.VideoCourseActivity;
 import com.google.android.material.card.MaterialCardView;
+import com.google.mediapipe.components.PermissionHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,7 +81,7 @@ public class LearnPageFragment extends Fragment {
         MaterialCardView btnAiCorrection = view.findViewById(R.id.btn_AI_correct);
         MaterialCardView btnVideoCourse = view.findViewById(R.id.btn_video_class);
         MaterialCardView btnMusicComposition = view.findViewById(R.id.btn_create);
-
+        ImageButton tune_btn=view.findViewById(R.id.tune_button);
 
         btnRecognizeSound.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), RecognizeSoundActivity.class);
@@ -98,6 +106,19 @@ public class LearnPageFragment extends Fragment {
             getActivity().startActivity(intent);
         });
 
+        tune_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /**
+                 * try to get the permission first
+                 */
+                if(PermissionHelper.audioPermissionsGranted(getActivity())){
+                    getActivity().startActivity(new Intent(getActivity(),TuneActivity.class));
+                }else{
+                    Toast.makeText(getActivity(),"未授予录音权限",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         return view;
     }
 }

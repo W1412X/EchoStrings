@@ -21,15 +21,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-        <androidx.appcompat.widget.Toolbar
-            android:fontFamily="@font/zkklt"
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+        <LinearLayout
+            android:orientation="horizontal"
             android:background="@color/green_200"
-            app:title="弦音拾梦"
-            app:titleTextColor="@color/white"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:text="弦音识梦"
+                android:textSize="25sp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/zkklt"/>
+            <ImageButton
+                android:id="@+id/tune_button"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="?attr/actionBarSize"
+                android:padding="15dp"
+                android:src="@drawable/icon_tune"
+                android:scaleType="centerInside"
+                android:background="@color/transparent"/>
+        </LinearLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 

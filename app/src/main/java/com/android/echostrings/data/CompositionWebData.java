@@ -15,7 +15,7 @@ public class CompositionWebData {
             "    <title>乐谱渲染</title>\n" +
             "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
             "    <link rel=\"stylesheet\" href=\"style.css\"></rel>\n" +
-            "    <script src=\"https://cdn.jsdelivr.net/npm/@coderline/alphatab@latest/dist/alphaTab.js\"></script>\n" +
+            "    <script src=\"http://118.89.82.46/alphaTab.js\"></script>\n" +
             "    <script src=\"https://kit.fontawesome.com/bc468997fd.js\" crossorigin=\"anonymous\"></script>\n" +
             "</head>\n" +
             "\n" +

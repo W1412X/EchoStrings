@@ -7,17 +7,21 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintManager;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.ConsoleMessage;
+import android.webkit.DownloadListener;
 import android.webkit.JsResult;
 import android.webkit.PermissionRequest;
+import android.webkit.URLUtil;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
@@ -36,6 +40,7 @@ import android.widget.Toast;
 import androidx.activity.ComponentActivity;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.airbnb.lottie.L;
 import com.android.echostrings.R;
 import com.android.echostrings.components.CompositionEditor;
 import com.android.echostrings.components.MessageItem;
@@ -46,6 +51,9 @@ import com.android.echostrings.network.data.ChatResponse;
 import com.android.echostrings.network.data.MusicCreateRequest;
 import com.android.echostrings.network.data.MusicCreateResponse;
 import com.google.mediapipe.components.PermissionHelper;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import alphaTab.AlphaTabApiBase;
 import alphaTab.AlphaTabView;
@@ -107,11 +115,14 @@ public class MusicCompositionActivity extends ComponentActivity {
                 /**
                  * get the midi file first
                  */
-                web.evaluateJavascript("api.downloadMidi();" +
-                        "", new ValueCallback<String>() {
+                web.evaluateJavascript("api.downloadMidi().then(base64String => {\n" +
+                        "    console.log(base64String);\n" +
+                        "}).catch(error => {\n" +
+                        "    console.error(\"error\");\n" +
+                        "});\n", new ValueCallback<String>() {
                     @Override
                     public void onReceiveValue(String value) {
-                        Log.e("JSJS",value);
+                        Log.d("midiString",value);
                     }
                 });
                 /**
@@ -264,11 +275,28 @@ public class MusicCompositionActivity extends ComponentActivity {
                 super.onPageStarted(view, url, favicon);
                 loading_view.setVisibility(View.VISIBLE);
             }
-
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                Log.e("UUUUUUUUUUU",url);
+                if (url.startsWith("blob:")) {
+                    // 处理blob协议的下载
+                    Log.e("UUUUUUUUUUU",url);
+                    return true;
+                } else {
+                    // 处理其他协议的请求
+                    return super.shouldOverrideUrlLoading(view, url);
+                }
+            }
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 loading_view.setVisibility(View.GONE);
+            }
+        });
+        web.setDownloadListener(new DownloadListener() {
+            @Override
+            public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimeType, long contentLength) {
+                downloadBlobFile(url);
             }
         });
         //set client
@@ -294,6 +322,35 @@ public class MusicCompositionActivity extends ComponentActivity {
         });
         //load local file
         web.loadDataWithBaseURL(null,CompositionWebData.getUpdatedHtml(CompositionWebData.getDefaultTex()),"text/html", "UTF-8",null);
+    }
+    private void downloadBlobFile(String url) {
+        // 从blob协议的url中提取二进制数据
+        String base64Data = url.substring(url.indexOf(",") + 1);
+
+        // 将二进制数据解码为字节数组
+        byte[] data = Base64.decode(base64Data, Base64.DEFAULT);
+
+        // 将字节数组保存为本地文件
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(Environment.getExternalStorageDirectory() + "/tmp" + "." + "midi");
+            fos.write(data);
+            fos.close();
+
+            // 下载完成，通知用户
+            Toast.makeText(MusicCompositionActivity.this, "文件下载完成", Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(MusicCompositionActivity.this, "文件下载失败", Toast.LENGTH_SHORT).show();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
     /**
      * some function to set the web

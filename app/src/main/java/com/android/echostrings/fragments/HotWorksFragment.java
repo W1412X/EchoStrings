@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.echostrings.R;
 import com.android.echostrings.adapter.ActivityVideoAdapter;
+import com.android.echostrings.data.ActivityItem;
 import com.android.echostrings.data.Work;
 import com.android.echostrings.network.ApiService;
 import com.android.echostrings.network.RetrofitClient;
@@ -45,16 +46,18 @@ public class HotWorksFragment extends Fragment {
 
     private void loadHotWorks() {
         ApiService apiService = RetrofitClient.getInstance().create(ApiService.class);
-        apiService.getHotWorks().enqueue(new Callback<List<Work>>() {
+        apiService.getHotWorks().enqueue(new Callback<ActivityItem>() {
+
             @Override
-            public void onResponse(Call<List<Work>> call, Response<List<Work>> response) {
+            public void onResponse(Call<ActivityItem> call, Response<ActivityItem> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    workAdapter.updateData(response.body());
+                    ActivityItem data = response.body();
+                    workAdapter.updateData(data.getHotwork());
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Work>> call, Throwable t) {
+            public void onFailure(Call<ActivityItem> call, Throwable t) {
                 // 处理请求失败
             }
         });

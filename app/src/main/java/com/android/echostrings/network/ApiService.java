@@ -45,9 +45,11 @@ public interface ApiService {
             @Part MultipartBody.Part file2
     );
     @GET("activity/intro")
-    Call<String> getActivityIntroduction();
+    Call<ActivityItem> getActivityIntroduction();
 
     @GET("activity/hotWorks")
-    Call<List<Work>> getHotWorks();
+    Call<ActivityItem> getHotWorks();
+    @GET("events?status_limit=3")
+    Call<ActivityItem> getEventsStatus();
 
 }

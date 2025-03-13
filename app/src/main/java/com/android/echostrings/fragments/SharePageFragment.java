@@ -177,7 +177,7 @@ public class SharePageFragment extends Fragment {
 
 
 
-        initDemoData();
+
 
 
         setupQuickAccessButtons();
@@ -187,23 +187,7 @@ public class SharePageFragment extends Fragment {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-    private void initDemoData() {
-        activityItems.add(new ActivityItem(
-                "7月弹唱大赛：周杰伦专场挑战",
-                "2023.07.01 - 2023.07.31",
 
-                "进行中",
-                "https://example.com/banner1.jpg"
-        ));
-
-        activityItems.add(new ActivityItem(
-                "吉他新手训练营",
-                "2023.08.01 - 2023.08.31",
-
-                "进行中",
-                "https://example.com/banner2.jpg"
-        ));
-    }
     private void loadPosts() {
         if (adapter == null) {
             Log.e("SharePageFragment", "Adapter 未初始化！");

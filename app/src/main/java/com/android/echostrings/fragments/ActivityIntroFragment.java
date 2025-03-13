@@ -12,8 +12,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.android.echostrings.R;
+import com.android.echostrings.data.ActivityItem;
 import com.android.echostrings.network.ApiService;
 import com.android.echostrings.network.RetrofitClient;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,16 +46,17 @@ public class ActivityIntroFragment extends Fragment {
 
     private void loadActivityIntroduction() {
         ApiService apiService = RetrofitClient.getInstance().create(ApiService.class);
-        apiService.getActivityIntroduction().enqueue(new Callback<String>() {
+        apiService.getActivityIntroduction().enqueue(new Callback<ActivityItem>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<ActivityItem> call, Response<ActivityItem> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    webView.loadDataWithBaseURL(null, response.body(), "text/html", "utf-8", null);
+                    ActivityItem data = response.body();
+                    webView.loadDataWithBaseURL(null, data.getActivityIntroduction(), "text/html", "UTF-8", null);
                 }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<ActivityItem> call, Throwable t) {
 
             }
         });

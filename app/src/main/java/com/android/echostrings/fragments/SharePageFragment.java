@@ -19,9 +19,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.echostrings.activities.NewPostActivity;
+import com.android.echostrings.adapter.PostAdapter;
+import com.android.echostrings.data.PostItem;
+import com.android.echostrings.network.ApiService;
+import com.android.echostrings.network.RetrofitClient;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -37,6 +43,11 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import java.util.ArrayList;
 import java.util.List;
+
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -82,6 +93,8 @@ public class SharePageFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -98,12 +111,27 @@ public class SharePageFragment extends Fragment {
     private Runnable runnable;
     private TabLayoutMediator tabLayoutMediator;
 
+    private PostAdapter adapter;
+    private List<PostItem> postList = new ArrayList<>();
+    private ApiService apiService;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_share_page, container, false);
         Toolbar toolbar =view.findViewById(R.id.toolbar);
         toolbar.inflateMenu(R.menu.community_menu);
+
+
+        RecyclerView recyclerView = view.findViewById(R.id.postRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        adapter = new PostAdapter(requireContext(), postList);
+
+        recyclerView.setAdapter(adapter);
+        apiService = RetrofitClient.getInstance().create(ApiService.class);
+
+        loadPosts(); // 加载帖子
 
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -175,6 +203,42 @@ public class SharePageFragment extends Fragment {
                 "进行中",
                 "https://example.com/banner2.jpg"
         ));
+    }
+    private void loadPosts() {
+        if (adapter == null) {
+            Log.e("SharePageFragment", "Adapter 未初始化！");
+            return;
+        }
+
+        apiService.getPosts().enqueue(new Callback<List<PostItem>>() {
+            @Override
+            public void onResponse(Call<List<PostItem>> call, Response<List<PostItem>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    postList.clear();
+                    postList.addAll(response.body());
+                    adapter.notifyDataSetChanged();
+                    Log.d("SharePageFragment", "加载成功: " + response.body().size() + " 条帖子");
+                } else {
+                    Log.e("SharePageFragment", "API 响应为空");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<PostItem>> call, Throwable t) {
+                Log.e("SharePageFragment", "加载失败: " + t.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == getActivity().RESULT_OK && data != null) {
+            PostItem newPost = (PostItem) data.getSerializableExtra("newPost");
+            if (newPost != null) {
+                adapter.addPost(newPost);
+            }
+        }
     }
 
     private void setupBannerSlider() {

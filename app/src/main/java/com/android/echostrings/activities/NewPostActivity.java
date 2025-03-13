@@ -1,6 +1,7 @@
 package com.android.echostrings.activities;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -15,18 +16,35 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.echostrings.R;
+import com.android.echostrings.data.PostItem;
+import com.android.echostrings.network.ApiService;
+import com.android.echostrings.network.RetrofitClient;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class NewPostActivity extends AppCompatActivity {
 
-    private static final int PICK_IMAGE_REQUEST = 1;
+    private static final int PICK_MEDIA_REQUEST = 1;
     private Uri imageUri;
+    private Uri videoUri;
     private EditText titleInput, textInput;
     private CheckBox privacyCheckbox;
     private ChipGroup chipGroup;
+    private ApiService apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +61,7 @@ public class NewPostActivity extends AppCompatActivity {
         chipGroup = findViewById(R.id.location_chip_group);
 
         btnSettings.setOnClickListener(v -> finish());
+        apiService = RetrofitClient.getInstance().create(ApiService.class);
 
         findViewById(R.id.image_button).setOnClickListener(v -> openGallery());
 
@@ -51,15 +70,27 @@ public class NewPostActivity extends AppCompatActivity {
     }
 
     private void openGallery() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("*/*"); // 允许选择图片或视频
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"image/*", "video/*"});
+        startActivityForResult(intent, PICK_MEDIA_REQUEST);
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
-            imageUri = data.getData();
+        if (requestCode == PICK_MEDIA_REQUEST && resultCode == RESULT_OK && data != null) {
+            Uri selectedFileUri = data.getData();
+            String fileType = getContentResolver().getType(selectedFileUri);
+
+            if (fileType != null) {
+                if (fileType.startsWith("image/")) {
+                    imageUri = selectedFileUri;  // 选择的是图片
+                } else if (fileType.startsWith("video/")) {
+                    videoUri = selectedFileUri;  // 选择的是视频
+                }
+            }
             Toast.makeText(this, "图片已选择", Toast.LENGTH_SHORT).show();
         }
     }
@@ -73,21 +104,44 @@ public class NewPostActivity extends AppCompatActivity {
             return;
         }
 
-        if (!privacyCheckbox.isChecked()) {
-            Toast.makeText(this, "请勾选隐私协议", Toast.LENGTH_SHORT).show();
-            return;
-        }
+        RequestBody titleBody = RequestBody.create(MediaType.parse("text/plain"), title);
+        RequestBody contentBody = RequestBody.create(MediaType.parse("text/plain"), content);
 
-        StringBuilder tags = new StringBuilder();
-        for (int i = 0; i < chipGroup.getChildCount(); i++) {
-            Chip chip = (Chip) chipGroup.getChildAt(i);
-            if (chip.isChecked()) {
-                tags.append(chip.getText()).append(", ");
+        MultipartBody.Part file1 = null, file2 = null;
+
+        if (imageUri != null) {
+            File imageFile = getFileFromUri(imageUri);
+            if (imageFile != null) {
+                RequestBody imageRequestBody = RequestBody.create(MediaType.parse("image/*"), imageFile);
+                file1 = MultipartBody.Part.createFormData("file1", imageFile.getName(), imageRequestBody);
             }
         }
 
-        Toast.makeText(this, "帖子已发布: " + title, Toast.LENGTH_SHORT).show();
-        finish();
+        if (videoUri != null) {
+            File videoFile = getFileFromUri(videoUri);
+            if (videoFile != null) {
+                RequestBody videoRequestBody = RequestBody.create(MediaType.parse("video/*"), videoFile);
+                file2 = MultipartBody.Part.createFormData("file2", videoFile.getName(), videoRequestBody);
+            }
+        }
+
+        apiService.createPost(titleBody, contentBody, file1, file2).enqueue(new Callback<PostItem>() {
+            @Override
+            public void onResponse(Call<PostItem> call, Response<PostItem> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    PostItem postedItem = response.body();
+                    Intent intent = new Intent();
+                    intent.putExtra("newPost", postedItem);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PostItem> call, Throwable t) {
+                Toast.makeText(NewPostActivity.this, "网络错误: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void saveDraft() {
@@ -99,4 +153,27 @@ public class NewPostActivity extends AppCompatActivity {
         }
         Toast.makeText(this, "草稿已保存", Toast.LENGTH_SHORT).show();
     }
+    private File getFileFromUri(Uri uri) {
+        File file = null;
+        try {
+            String fileName = System.currentTimeMillis() + ".tmp"; // 生成唯一文件名
+            file = new File(getCacheDir(), fileName);
+
+            try (InputStream inputStream = getContentResolver().openInputStream(uri);
+                 OutputStream outputStream = new FileOutputStream(file)) {
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
+
+
+
+
 }

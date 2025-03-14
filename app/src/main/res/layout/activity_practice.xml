@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.PracticeActivity">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:fontFamily="@font/zkklt"
+            android:text="曲谱练习"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:background="@color/mainColor"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
+        <WebView
+            android:id="@+id/practise_composition_web"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="55dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/background_main_redius"
+                android:fontFamily="@font/zkklt"
+                android:text="开始练习"
+                android:id="@+id/practise_btn"
+                android:textColor="@color/white"
+                android:textSize="22sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:fontFamily="@font/zkklt"
+                android:text="智能分析"
+                android:id="@+id/analyze_btn"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                android:background="@drawable/background_main_redius"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
+    <WebView
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/data_analyze_page"/>
+</RelativeLayout>

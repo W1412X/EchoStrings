@@ -26,16 +26,19 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activities.PracticeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.Finger"
             android:exported="false" />
         <activity
             android:name=".activities.RecognizeSoundActivity"
             android:exported="false" />
         <activity android:name=".activities.MusicCompositionActivity" />
-        <activity android:name=".activities.TuneActivity">
-
-
-        </activity>
+        <activity android:name=".activities.TuneActivity" />
         <activity
             android:name=".ChordLearnActivity"
             android:exported="false"

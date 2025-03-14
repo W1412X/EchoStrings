@@ -74,35 +74,35 @@ public class ActivityDetailActivity extends AppCompatActivity {
             startActivity(intent);
         });
     }
-        private void loadEventStatus() {
-            ApiService apiService = retrofit.create(ApiService.class);
-            Call<ActivityItem> call = apiService.getEventsStatus();
+    private void loadEventStatus() {
+        ApiService apiService = retrofit.create(ApiService.class);
+        Call<ActivityItem> call = apiService.getEventsStatus();
 
-            call.enqueue(new Callback<ActivityItem>() {
-                @Override
-                public void onResponse(Call<ActivityItem> call, Response<ActivityItem> response) {
-                    if (response.isSuccessful() && response.body() != null) {
-                        ActivityItem data = response.body();
-
-
-                        String statusText = data.getStatus() + "  |  " +
-                                data.getParticipants() + "人参与  |  " +
-                                data.getTime();
-
-                        eventStatus.setText(statusText);
+        call.enqueue(new Callback<ActivityItem>() {
+            @Override
+            public void onResponse(Call<ActivityItem> call, Response<ActivityItem> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ActivityItem data = response.body();
 
 
-                    } else {
-                        eventStatus.setText("活动信息加载失败");
-                    }
+                    String statusText = data.getStatus() + "  |  " +
+                            data.getParticipants() + "人参与  |  " +
+                            data.getTime();
+
+                    eventStatus.setText(statusText);
+
+
+                } else {
+                    eventStatus.setText("活动信息加载失败");
                 }
+            }
 
-                @Override
-                public void onFailure(Call<ActivityItem> call, Throwable t) {
-                    eventStatus.setText("活动信息加载失败，请检查网络连接");
-                }
-            });
-        }
+            @Override
+            public void onFailure(Call<ActivityItem> call, Throwable t) {
+                eventStatus.setText("活动信息加载失败，请检查网络连接");
+            }
+        });
+    }
 
 
 

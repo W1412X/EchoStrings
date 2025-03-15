@@ -163,5 +163,20 @@
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/global_loading_view_relative"
+            android:background="#eeffffff"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <com.airbnb.lottie.LottieAnimationView
+                android:scaleType="centerInside"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:lottie_rawRes="@raw/animation_loading_main"
+                app:lottie_loop="true"
+                app:lottie_autoPlay="true" />
+        </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

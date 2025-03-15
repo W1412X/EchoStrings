@@ -20,7 +20,7 @@
         <item>120</item>
     </string-array>
     <string-array name="tune">
-        <item>E A D G B E</item>
+        <item>e5 b4 g4 d4 a3 e3</item>
     </string-array>
     <string-array name="time">
         <item>10</item>

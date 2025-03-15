@@ -3,10 +3,16 @@ package com.android.echostrings.components;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.media.MediaRecorder;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.ValueCallback;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,11 +25,27 @@ import androidx.core.content.ContextCompat;
 
 import com.android.echostrings.ChordLearnActivity;
 import com.android.echostrings.R;
+import com.android.echostrings.activities.PracticeActivity;
 import com.android.echostrings.data.ChordLearnData;
+import com.android.echostrings.network.ApiService;
+import com.android.echostrings.network.data.ChordRecognitionResponse;
 import com.google.mediapipe.components.PermissionHelper;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 import android.os.Handler;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ChordButton extends LinearLayout {
     private TextView little_title,big_title,press_description,play_description;
@@ -190,29 +212,76 @@ public class ChordButton extends LinearLayout {
                  */
                 overlay_text.setVisibility(View.GONE);
                 overlay_model_load.setVisibility(View.VISIBLE);
-                if(true){
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
+                File file = new File(audio_path);
+                RequestBody requestFile = RequestBody.create(MediaType.parse("audio/wav"), file); // 确保MIME类型正确
+                MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+
+                OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                        .connectTimeout(300, java.util.concurrent.TimeUnit.SECONDS)
+                        .writeTimeout(300, java.util.concurrent.TimeUnit.SECONDS)
+                        .readTimeout(300, java.util.concurrent.TimeUnit.SECONDS)
+                        .build();
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(getResources().getString(R.string.server_url))
+                        .client(okHttpClient)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+
+                ApiService apiService = retrofit.create(ApiService.class);
+                Call<ChordRecognitionResponse> call = apiService.recognizeChord(body);
+                call.enqueue(new Callback<ChordRecognitionResponse>() {
+                    @Override
+                    public void onResponse(Call<ChordRecognitionResponse> call, Response<ChordRecognitionResponse> response) {
+                        if(response.isSuccessful()) {
+                            ChordRecognitionResponse chordRecognitionResponse = response.body();
+                            if(chordRecognitionResponse != null && "success".equals(chordRecognitionResponse.getStatus())&&chordRecognitionResponse.getChord().equals(chord)) {
+                                Log.e("RESULT",chordRecognitionResponse.getChord());
+                                overlay_model_load.setVisibility(View.GONE);
+                                right_overlay.setVisibility(View.VISIBLE);
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        right_overlay.setVisibility(View.GONE);
+                                    }
+                                },1000);
+                            }else{
+                                error_overlay.setVisibility(View.VISIBLE);
+                                overlay_model_load.setVisibility(View.GONE);
+                                Log.e("RESULT","RESPONSE ERROR");
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        error_overlay.setVisibility(View.GONE);
+                                    }
+                                },1000);
+                            }
+                        } else {
+                            error_overlay.setVisibility(View.VISIBLE);
                             overlay_model_load.setVisibility(View.GONE);
-                            right_overlay.setVisibility(View.VISIBLE);
+                            Log.e("RESULT","RESPONSE ERROR");
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    right_overlay.setVisibility(View.GONE);
+                                    error_overlay.setVisibility(View.GONE);
                                 }
                             },1000);
                         }
-                    },2000);
-                }else{
-                    error_overlay.setVisibility(View.VISIBLE);
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            error_overlay.setVisibility(View.GONE);
-                        }
-                    },1000);
-                }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ChordRecognitionResponse> call, Throwable t) {
+                        error_overlay.setVisibility(View.VISIBLE);
+                        overlay_model_load.setVisibility(View.GONE);
+                        Log.e("RESULT","NETWORK ERROR");
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                error_overlay.setVisibility(View.GONE);
+                            }
+                        },1000);
+                    }
+                });
                 overlay.setVisibility(View.GONE);
                 secondsCount=0;
             }

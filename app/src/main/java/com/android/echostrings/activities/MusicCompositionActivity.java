@@ -48,12 +48,16 @@ import com.android.echostrings.data.CompositionWebData;
 import com.android.echostrings.network.ApiService;
 import com.android.echostrings.network.data.ChatRequest;
 import com.android.echostrings.network.data.ChatResponse;
+import com.android.echostrings.network.data.CompositionRequest;
+import com.android.echostrings.network.data.CompositionResponse;
 import com.android.echostrings.network.data.MusicCreateRequest;
 import com.android.echostrings.network.data.MusicCreateResponse;
 import com.google.mediapipe.components.PermissionHelper;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import alphaTab.AlphaTabApiBase;
 import alphaTab.AlphaTabView;
@@ -116,13 +120,62 @@ public class MusicCompositionActivity extends ComponentActivity {
                  * get the midi file first
                  */
                 web.evaluateJavascript("api.downloadMidi().then(base64String => {\n" +
-                        "    console.log(base64String);\n" +
+                        "var e = document.createElement(\"div\");" +
+                        "e.id = \"midi-mine\";" +
+                        "e.value = base64String;\n" +
+                        "document.body.appendChild(e);" +
+                        "console.log(e.value);" +
                         "}).catch(error => {\n" +
-                        "    console.error(\"error\");\n" +
+                        "    '';\n" +
                         "});\n", new ValueCallback<String>() {
                     @Override
                     public void onReceiveValue(String value) {
-                        Log.d("midiString",value);
+                        web.evaluateJavascript("document.getElementById(\"midi-mine\").value;", new ValueCallback<String>() {
+                            @Override
+                            public void onReceiveValue(String value) {
+                                loading_view.setVisibility(View.VISIBLE);
+                                OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                                        .connectTimeout(300, java.util.concurrent.TimeUnit.SECONDS)
+                                        .writeTimeout(300, java.util.concurrent.TimeUnit.SECONDS)
+                                        .readTimeout(300, java.util.concurrent.TimeUnit.SECONDS)
+                                        .build();
+                                Retrofit retrofit = new Retrofit.Builder()
+                                        .baseUrl(getResources().getString(R.string.server_url))
+                                        .client(okHttpClient)
+                                        .addConverterFactory(GsonConverterFactory.create())
+                                        .build();
+                                ApiService apiService = retrofit.create(ApiService.class);
+                                CompositionRequest musicCreateRequest = new CompositionRequest("1",
+                                        value,
+                                        extractTitle(tex_now),
+                                        tex_now
+                                );
+                                Call<CompositionResponse> call = apiService.uploadComposition(musicCreateRequest);
+                                call.enqueue(new Callback<CompositionResponse>() {
+                                    @Override
+                                    public void onResponse(Call<CompositionResponse> call, Response<CompositionResponse> response) {
+                                        if (response.isSuccessful()) {
+                                            CompositionResponse compositionResponse = response.body();
+                                            Toast.makeText(MusicCompositionActivity.this,"上传成功",Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Log.e("network_error", call.toString());
+                                            Log.e("network_error", response.toString());
+                                            Toast.makeText(MusicCompositionActivity.this, "请求错误", Toast.LENGTH_SHORT).show();
+                                        }
+                                        loading_view.setVisibility(View.GONE); // 隐藏进度条或执行其他UI更新操作
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<CompositionResponse> call, Throwable t) {
+                                        // 返回 "/title" 和下一个空格之间的字符串Log.e("network_error", call.toString());
+                                        Log.e("network_error", t.toString());
+                                        Toast.makeText(MusicCompositionActivity.this, "请求错误", Toast.LENGTH_SHORT).show();
+                                        loading_view.setVisibility(View.GONE); // 隐藏进度条或执行其他UI更新操作
+                                    }
+                                });
+                            }
+                        });
+
                     }
                 });
                 /**
@@ -144,12 +197,12 @@ public class MusicCompositionActivity extends ComponentActivity {
                  * get the response from server
                  */
                 OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                        .connectTimeout(600, java.util.concurrent.TimeUnit.SECONDS)
-                        .writeTimeout(600, java.util.concurrent.TimeUnit.SECONDS)
-                        .readTimeout(600, java.util.concurrent.TimeUnit.SECONDS)
+                        .connectTimeout(300, java.util.concurrent.TimeUnit.SECONDS)
+                        .writeTimeout(300, java.util.concurrent.TimeUnit.SECONDS)
+                        .readTimeout(300, java.util.concurrent.TimeUnit.SECONDS)
                         .build();
                 Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://10.102.33.19:8000")
+                        .baseUrl(getResources().getString(R.string.server_url))
                         .client(okHttpClient)
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
@@ -157,7 +210,7 @@ public class MusicCompositionActivity extends ComponentActivity {
                 ApiService apiService = retrofit.create(ApiService.class);
                 Log.i("test",guitar_beat.getSelectedItem().toString());
 
-                MusicCreateRequest musicCreateRequest = new MusicCreateRequest("1001".toString(),
+                MusicCreateRequest musicCreateRequest = new MusicCreateRequest("1",
                         score_title.getText().toString(),
                         CompositionWebData.getId(guitar_tone.getSelectedItem().toString()),
                         guitar_tune.getSelectedItem().toString(),
@@ -256,6 +309,17 @@ public class MusicCompositionActivity extends ComponentActivity {
                 editor.setOriTex(tex_now);
             }
         });
+    }
+    public String extractTitle(String input) {
+        Pattern titlePattern = Pattern.compile("\\\\title \"([^\"]*)\"");
+        Matcher titleMatcher = titlePattern.matcher(input);
+        if (titleMatcher.find()) {
+            return titleMatcher.group(1);
+        }else{
+            return "无标题";
+
+
+        }
     }
     /**
      * init the web
@@ -406,6 +470,7 @@ public class MusicCompositionActivity extends ComponentActivity {
      */
     public void updateWeb(String tex){
         this.tex_now=tex;
+        Log.d("TEX",this.tex_now);
         web.loadDataWithBaseURL(null,CompositionWebData.getUpdatedHtml(this.tex_now), "text/html", "UTF-8",null);
     }
     /**

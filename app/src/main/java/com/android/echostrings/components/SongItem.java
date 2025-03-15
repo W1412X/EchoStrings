@@ -26,7 +26,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SongItem extends LinearLayout {
     private TextView name_text,author_text;
-    private String id;
+    private int id;
     // 构造函数
     public SongItem(@NonNull Context context, @NonNull AttributeSet attrs) {
         super(context, attrs);
@@ -41,7 +41,7 @@ public class SongItem extends LinearLayout {
         super(context);
         init(context);
     }
-    public SongItem(@NonNull Context context,String song,String author,String id){
+    public SongItem(@NonNull Context context,String song,String author,int id){
         super(context);
         init(context);
         name_text.setText(song);

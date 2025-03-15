@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>曲谱对比折线图</title>
+    <script src="http://118.89.82.46/chart.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #fff5d7;
+        }
+
+        h1 {
+            font-size: 26px;
+            color: #d18b00;
+            margin-bottom: 15px;
+        }
+
+        h2,
+        h3 {
+            font-size: 20px;
+            color: #d18b00;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 16px;
+            color: #6a4f00;
+        }
+
+        .chart-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+            border-top: 4px solid #fdb904;
+        }
+
+        .chart-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            background-color: #fff5d7;
+            border-radius: 8px;
+        }
+
+        canvas {
+            width: 100%;
+            height: auto;
+            min-width: 300px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 24px;
+            font-size: 16px;
+            background-color: #fdb904;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #d18b00;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 22px;
+            }
+
+            p {
+                font-size: 14px;
+            }
+
+            button {
+                font-size: 14px;
+                padding: 10px 20px;
+            }
+        }
+
+        /* 遮罩层样式 */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .overlay-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .overlay-content input {
+            margin-bottom: 10px;
+        }
+
+        .avg-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px auto;
+        }
+
+        .ai-container {
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+            border-left: 5px solid #fdb904;
+        }
+
+        .ai-container:hover {
+            transform: scale(1.03);
+        }
+
+        .ai-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #d18b00;
+            margin-bottom: 20px;
+        }
+
+        .ai-text {
+            font-size: 16px;
+            color: #555;
+            margin-top: 10px;
+            line-height: 1.5;
+            text-align: left;
+            text-indent: 2em;
+            padding: 20px;
+        }
+
+        .ai-evalution {
+            font-size: 16px;
+            color: #555;
+            margin-top: 10px;
+            line-height: 1.5;
+            text-align: left;
+            text-indent: 2em;
+            padding: 20px;
+        }
+
+        .ai-suggestion {
+            font-size: 16px;
+            color: #555;
+            margin-top: 10px;
+            line-height: 1.5;
+            text-align: left;
+            text-indent: 2em;
+            padding: 20px;
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+        }
+
+        .legend-text {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .json-container {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+<div class="json-container">
+    <textarea id="jsonInput" rows="10" cols="50" placeholder="在此输入标准JSON字符串"></textarea>
+    <button id="convertButton">转换为JSON格式</button>
+</div>
+
+<h1 id="title">曲谱分析可视化</h1>
+<div class="avg-container">
+    <canvas id="avgChart" height="200"></canvas>
+    <h2 id="avgTitle">您的各项平均得分</h2>
+    <!-- 添加图例 -->
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: red;"></div>
+            <div class="legend-text">整体匹配度</div>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: blue;"></div>
+            <div class="legend-text">MFCC匹配度</div>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: green;"></div>
+            <div class="legend-text">音高匹配度</div>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: purple;"></div>
+            <div class="legend-text">节拍匹配度</div>
+        </div>
+    </div>
+</div>
+
+<div class="ai-container">
+    <div class="ai-title">AI 分析结果</div>
+    <h3>AI评价</h3>
+    <div class="ai-text" id="ai-evaluate">正在加载分析结果...</div>
+    <h3>AI建议</h3>
+    <div class="ai-text" id="ai-suggestion">正在加载分析结果...</div>
+</div>
+
+<div class="chart-container">
+    <h3>整体匹配度</h3>
+    <p id="matchAvg">平均值: 计算中...</p>
+    <div class="chart-wrapper">
+        <canvas id="matchChart"></canvas>
+    </div>
+</div>
+
+<div class="chart-container">
+    <h3>MFCC匹配度</h3>
+    <p id="mfccAvg">平均值: 计算中...</p>
+    <div class="chart-wrapper">
+        <canvas id="mfccChart"></canvas>
+    </div>
+</div>
+
+<div class="chart-container">
+    <h3>音高匹配度</h3>
+    <p id="pitchAvg">平均值: 计算中...</p>
+    <div class="chart-wrapper">
+        <canvas id="pitchChart"></canvas>
+    </div>
+</div>
+
+<div class="chart-container">
+    <h3>节拍匹配度</h3>
+    <p id="beatsAvg">平均值: 计算中...</p>
+    <div class="chart-wrapper">
+        <canvas id="beatsChart"></canvas>
+    </div>
+</div>
+
+<button id="refreshButton">刷新数据</button>
+
+</body>
+<script>
+
+    let charts = {}; // 存储所有图表对象
+    let data = null;
+    async function fetchScores() {
+
+        try {
+            const jsonInput = document.getElementById('jsonInput').value;
+            data = JSON.parse(jsonInput).data;
+            console.log('成功:', data);
+            //alert('文件上传成功');
+            //console.log("获取数据开始");
+            //console.log("获取数据:", result);
+            console.log(data);
+            const labels = data.match_scores.map((_, index) => `${index}- ${index + 1} s`);
+
+            // 计算平均值
+            const matchAvgVal = updateAverage("matchAvg", data.match_scores);
+            const mfccAvgVal = updateAverage("mfccAvg", data.mfcc_scores);
+            const pitchAvgVal = updateAverage("pitchAvg", data.pitch_scores);
+            const beatsAvgVal = updateAverage("beatsAvg", data.beats_scores);
+
+            // 更新图表
+            updateChart('matchChart', labels, data.match_scores, 'red', '整体匹配度');
+            updateChart('mfccChart', labels, data.mfcc_scores, 'blue', 'MFCC匹配度');
+            updateChart('pitchChart', labels, data.pitch_scores, 'green', '音高匹配度');
+            updateChart('beatsChart', labels, data.beats_scores, 'purple', '节拍匹配度');
+
+            updateSemiCircleChart([matchAvgVal, mfccAvgVal, pitchAvgVal, beatsAvgVal]);
+
+            // 隐藏遮罩层
+            document.getElementById('overlay').style.display = 'none';
+
+        } catch (error) {
+            console.error("获取数据失败:", error);
+            alert("无法获取数据，请检查后端是否运行");
+        }
+
+        aianlynize();
+    }
+
+    async function aianlynize() {
+        let question = "进行弹奏数据分析，根据我的吉他弹奏和标准乐曲对比的得分，写一份弹奏总结，不要直接阐述数据，给出通俗易懂的评价与指导，其中match_scores为各时间区间（区间长度1秒）的整体匹配度，mfcc_scores为各时间区间的MFCC匹配度，pitch_scores为各时间区间的音高匹配度，beats_scores为各时间区间的节拍匹配度";
+        let datatext = JSON.stringify(data);
+        question = question.concat(datatext);
+        try {
+            const response = await fetch('http://39.98.126.190:8000/ai/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    user_id: "1",
+                    question: question
+                })
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP 错误！状态码: ${response.status}`);
+            }
+
+            let result = await response.json();
+            console.log("AI分析结果:", result);
+            answer = JSON.parse(result.answer);
+            document.getElementById("ai-evaluate").innerText = answer.evaluate;
+            document.getElementById("ai-suggestion").innerText = answer.suggestion;
+
+        } catch (error) {
+            console.error("AI分析失败:", error);
+            alert("无法获取AI数据，请检查后端是否运行");
+        }
+    }
+
+    function updateAverage(elementId, scores) {
+        if (scores.length === 0) {
+            document.getElementById(elementId).innerText = "平均值: 无数据";
+            return;
+        }
+        const avg = (scores.reduce((sum, val) => sum + val, 0) / scores.length).toFixed(4);
+        document.getElementById(elementId).innerText = `平均值: ${avg * 100}%`;
+        return avg;
+    }
+
+    function updateChart(canvasId, labels, data, color, label) {
+        const ctx = document.getElementById(canvasId).getContext('2d');
+
+        // 如果该 canvasId 已有图表，先销毁旧的 Chart 实例
+        if (charts[canvasId]) {
+            charts[canvasId].destroy();
+        }
+
+        // 计算最大值和最小值，避免只有 0% 一个刻度
+        let maxValue = Math.max(...data);
+        let minValue = Math.min(...data);
+
+        // 确保 Y 轴至少有两个刻度
+        let suggestedMax = maxValue > 0 ? maxValue * 1.2 : 0.1;
+        let suggestedMin = Math.max(minValue * 0.8, 0);
+
+        // 计算合适的 stepSize，确保不会出现重复刻度
+        let range = suggestedMax - suggestedMin;
+        let stepSize = range / 5; // 让 Y 轴有大约 5 个刻度
+
+        charts[canvasId] = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: label,
+                    data: data,
+                    borderColor: color,
+                    backgroundColor: 'rgba(253, 185, 4, 0.2)', // 金黄色半透明填充
+                    fill: true,
+                    tension: 0.4, // 平滑曲线
+                    pointRadius: 2,
+                    pointBackgroundColor: color,
+                    pointHoverRadius: 3,
+                    pointHoverBackgroundColor: "#fff",
+                    pointHoverBorderColor: color,
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        ticks: {
+                            stepSize: stepSize, // 自动计算间隔，确保均匀
+                            color: '#666',
+                            font: { size: 14 },
+                            precision: 2, // 确保刻度显示小数，避免重复
+                            autoSkip: false, // 禁用自动跳过刻度
+                            callback: function (value) {
+                                return (value * 100).toFixed(1) + '%'; // 以 1 位小数显示百分比
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)' // 更淡的网格线
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#666',
+                            font: { size: 12 }
+                        },
+                        grid: {
+                            display: false // 隐藏 x 轴网格线
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#333',
+                            font: { size: 14 }
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                        titleFont: { size: 14 },
+                        bodyFont: { size: 14 },
+                        callbacks: {
+                            label: function (context) {
+                                let value = context.raw;
+                                return `${context.dataset.label}: ${(value * 100).toFixed(2)}%`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+
+
+
+    function updateSemiCircleChart(avgData) {
+        const ctx = document.getElementById("avgChart").getContext("2d");
+        if (window.avgChartInstance) window.avgChartInstance.destroy();
+
+        // 将平均值转换为百分制
+        let [match, mfcc, pitch, beats] = avgData.map(v => v * 100);
+
+        // 创建四个同心半圆环
+        window.avgChartInstance = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                // 每个环使用两段 [得分, 100 - 得分]
+                datasets: [
+                    {
+                        label: 'Match_Scores',
+                        data: [match, 100 - match],
+                        backgroundColor: ['red', 'rgba(0, 0, 0, 0.1)'],
+                        radius: '100%',
+                        cutout: '70%',
+                        borderWidth: 0
+                    },
+                    {
+                        label: 'MFCC_Scores',
+                        data: [mfcc, 100 - mfcc],
+                        backgroundColor: ['blue', 'rgba(0, 0, 0, 0.1)'],
+                        radius: '85%',
+                        cutout: '55%',
+                        borderWidth: 0
+                    },
+                    {
+                        label: 'Pitch_Scores',
+                        data: [pitch, 100 - pitch],
+                        backgroundColor: ['green', 'rgba(0, 0, 0, 0.1)'],
+                        radius: '70%',
+                        cutout: '40%',
+                        borderWidth: 0
+                    },
+                    {
+                        label: 'Beats_Scores',
+                        data: [beats, 100 - beats],
+                        backgroundColor: ['purple', 'rgba(0, 0, 0, 0.1)'],
+                        radius: '55%',
+                        cutout: '25%',
+                        borderWidth: 0
+                    }
+                ]
+            },
+            options: {
+                rotation: -90,          // 从 -90° 开始
+                circumference: 360,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        enabled: true,
+                        callbacks: {
+                            label: function (context) {
+                                if (context.dataIndex === 0) {
+                                    return `${context.dataset.label}: ${context.raw}%`;
+                                }
+                                return null;
+                            }
+                        }
+                    }
+                },
+                responsive: false
+            }
+        });
+    }
+
+    // 绑定上传按钮事件
+    //document.getElementById('uploadButton').addEventListener('click', fetchScores);
+
+    // 绑定刷新按钮事件
+    document.getElementById("refreshButton").addEventListener("click", fetchScores);
+
+    document.getElementById('convertButton').addEventListener('click', fetchScores);
+</script>
+
+</html>

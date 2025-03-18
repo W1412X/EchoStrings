@@ -183,7 +183,7 @@
                             android:layout_marginLeft="10dp"
                             android:textSize="18sp"
                             android:layout_weight="100"
-                            android:background="@drawable/background_main_redius"
+                            android:background="@drawable/background_deep_main_radius"
                             android:layout_height="wrap_content">
                         </androidx.appcompat.widget.AppCompatButton>
                     </LinearLayout>
@@ -199,7 +199,7 @@
                             android:layout_marginBottom="10dp"
                             android:textSize="20sp"
                             android:textColor="#ffffff"
-                            android:background="@drawable/background_main_redius"
+                            android:background="@color/green_200"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
                         </androidx.appcompat.widget.AppCompatButton>
@@ -220,7 +220,7 @@
                 android:padding="0px"
                 android:text="         没有帐号？立即注册>>"
                 android:textStyle="bold"
-                android:textColor="#ee3654d5"
+                android:textColor="@color/green_200"
                 android:layout_marginRight="40dp"
                 android:textSize="16sp">
             </androidx.appcompat.widget.AppCompatButton>

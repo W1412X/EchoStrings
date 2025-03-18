@@ -13,6 +13,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.android.echostrings.R;
 import com.android.echostrings.data.ActivityItem;
+import com.android.echostrings.data.Work;
 import com.android.echostrings.fragments.ActivityIntroFragment;
 import com.android.echostrings.fragments.HotWorksFragment;
 import com.android.echostrings.network.ApiService;
@@ -22,6 +23,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -94,6 +96,25 @@ public class ActivityDetailActivity extends AppCompatActivity {
 
 
         loadEventDetails(activityId);
+        loadMockEventDetails();
+    }
+    private void loadMockEventDetails() {
+        List<Work> hotWorks1 = Arrays.asList(
+                new Work("星空", "4:23", "gs", "https://example.com/work1")
+
+        );
+
+        ActivityItem mockEvent = new ActivityItem(
+                "1","活动 1", "2035.2.3-2025.6.3","进行中","",100,"",hotWorks1
+
+        );
+
+
+
+        String statusText = mockEvent.getStatus() + "  |  " +
+                mockEvent.getParticipants() + "人参与  |  " +
+                mockEvent.getTime();
+        eventStatus.setText(statusText);
     }
         private void loadEventDetails(String activityId) {
 

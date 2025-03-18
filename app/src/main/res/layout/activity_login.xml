@@ -132,7 +132,7 @@
                             android:text="用户名登陆"
                             android:textSize="20sp"
                             android:textColor="#ffffff"
-                            android:background="@drawable/background_main_redius"
+                            android:background="@color/green_200"
                             android:layout_marginBottom="10dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
@@ -183,7 +183,7 @@
                             android:layout_marginLeft="10dp"
                             android:textSize="18sp"
                             android:layout_weight="100"
-                            android:background="@drawable/background_deep_main_radius"
+                            android:background="@color/yello_200"
                             android:layout_height="wrap_content">
                         </androidx.appcompat.widget.AppCompatButton>
                     </LinearLayout>

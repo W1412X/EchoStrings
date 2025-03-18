@@ -82,7 +82,7 @@ public class ActivityListActivity extends AppCompatActivity {
                 new Work("星空", "4:23", "gs", "https://example.com/work1")
 
         );
-        eventList.add(new ActivityItem("1","活动 1", "2035.2.3-20256.3","进行中","",100,"",hotWorks1));
+        eventList.add(new ActivityItem("1","活动 1", "2035.2.3-2025.6.3","进行中","",100,"",hotWorks1));
 
 
         // 通知适配器数据已经更新

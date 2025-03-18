@@ -114,19 +114,19 @@ public class CompositionEditor  extends LinearLayout {
                  * get the response from server
                  */
                 OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                        .connectTimeout(600, java.util.concurrent.TimeUnit.SECONDS)
-                        .writeTimeout(600, java.util.concurrent.TimeUnit.SECONDS)
-                        .readTimeout(600, java.util.concurrent.TimeUnit.SECONDS)
+                        .connectTimeout(300, java.util.concurrent.TimeUnit.SECONDS)
+                        .writeTimeout(300, java.util.concurrent.TimeUnit.SECONDS)
+                        .readTimeout(300, java.util.concurrent.TimeUnit.SECONDS)
                         .build();
                 Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://10.102.33.19:8000")
+                        .baseUrl(getResources().getString(R.string.server_url))
                         .client(okHttpClient)
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
 
                 ApiService apiService = retrofit.create(ApiService.class);
-                ChatRequest chatRequest = new ChatRequest("1001", message);
-                Log.i("message",message_input.getText().toString());
+                ChatRequest chatRequest = new ChatRequest("1", message);
+                Log.i("message",message);
                 Call<ChatResponse> call = apiService.sendMessage(chatRequest);
                 call.enqueue(new Callback<ChatResponse>() {
                     @Override

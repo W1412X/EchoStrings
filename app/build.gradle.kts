@@ -68,9 +68,9 @@ dependencies {
     //network
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     //html deal
     implementation("org.jsoup:jsoup:1.15.4")
     //animation
     implementation("com.airbnb.android:lottie:3.7.0")
-    //font
 }

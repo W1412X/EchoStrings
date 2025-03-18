@@ -25,6 +25,9 @@ public class TuneActivity extends AppCompatActivity {
         web=findViewById(R.id.tune_activity_web);
         WebSettings webSettings = web.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setDomStorageEnabled(true);
+        webSettings.setSupportMultipleWindows(true);//允许开发多个窗口
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true); //设置允许JS弹窗
         if (!PermissionHelper.audioPermissionsGranted(TuneActivity.this)) {
             Toast.makeText(TuneActivity.this,"未授予录音权限",Toast.LENGTH_SHORT).show();
             onBackPressed();

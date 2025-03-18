@@ -7,7 +7,7 @@
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
-
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- For MediaPipe -->
     <uses-feature
@@ -15,6 +15,7 @@
         android:required="true" />
 
     <application
+        android:extractNativeLibs="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -26,16 +27,19 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activities.PracticeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.Finger"
             android:exported="false" />
         <activity
             android:name=".activities.RecognizeSoundActivity"
             android:exported="false" />
         <activity android:name=".activities.MusicCompositionActivity" />
-        <activity android:name=".activities.TuneActivity">
-
-
-        </activity>
+        <activity android:name=".activities.TuneActivity" />
         <activity
             android:name=".ChordLearnActivity"
             android:exported="false"

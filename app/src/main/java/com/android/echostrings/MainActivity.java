@@ -14,6 +14,7 @@ import android.view.Window;
 import com.android.echostrings.fragments.LearnPageFragment;
 import com.android.echostrings.fragments.SelfPageFragment;
 import com.android.echostrings.fragments.SharePageFragment;
+import com.android.echostrings.utils.PreferencesUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(PreferencesUtil.getString(MainActivity.this,"user_name","").equals("")){
+            startActivity(new Intent(MainActivity.this,LoginActivity.class));
+        }
         /*
          * 去除顶部状态栏
          */

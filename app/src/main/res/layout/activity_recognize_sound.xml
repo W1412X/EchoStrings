@@ -42,7 +42,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <LinearLayout
-                        android:background="@drawable/background_green_radius"
+                        android:id="@+id/sing_play_button"
+                        android:background="@drawable/background_deep_main_radius"
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -78,6 +79,7 @@
                         </LinearLayout>
                     </LinearLayout>
                     <LinearLayout
+                        android:id="@+id/finger_play_button"
                         android:layout_marginTop="20dp"
                         android:background="@drawable/background_main_redius"
                         android:orientation="horizontal"
@@ -118,4 +120,63 @@
             </ScrollView>
         </LinearLayout>
     </LinearLayout>
+    <androidx.cardview.widget.CardView
+        android:visibility="gone"
+        android:id="@+id/song_container_card"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="50dp"
+        android:elevation="10dp">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:padding="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="曲谱库"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="22sp"
+                    android:fontFamily="@font/zkklt"
+                    android:textColor="@color/mainColor"/>
+                <LinearLayout
+                    android:background="@color/mainColor"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
+            </LinearLayout>
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <LinearLayout
+                    android:id="@+id/song_container_linear"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/global_loading_view_relative"
+            android:background="#eeffffff"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <com.airbnb.lottie.LottieAnimationView
+                android:scaleType="centerInside"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:lottie_rawRes="@raw/animation_loading_main"
+                app:lottie_loop="true"
+                app:lottie_autoPlay="true" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 </RelativeLayout>

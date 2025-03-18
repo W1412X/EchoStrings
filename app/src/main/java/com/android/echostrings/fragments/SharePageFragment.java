@@ -302,7 +302,7 @@ public class SharePageFragment extends Fragment {
     }
     private void setupAutoScroll() {
 
-         runnable = new Runnable() {
+        runnable = new Runnable() {
             @Override
             public void run() {
                 int currentPosition = bannerViewPager.getCurrentItem();
@@ -326,7 +326,7 @@ public class SharePageFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        
+
         handler.removeCallbacks(runnable);
         if (tabLayoutMediator != null) {
             tabLayoutMediator.detach(); // 解绑

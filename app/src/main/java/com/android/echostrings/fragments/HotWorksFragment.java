@@ -28,6 +28,7 @@ import retrofit2.Response;
 public class HotWorksFragment extends Fragment {
     private RecyclerView recyclerView;
     private ActivityVideoAdapter workAdapter;
+    private String activityId;
 
     public HotWorksFragment() {}
 
@@ -39,14 +40,21 @@ public class HotWorksFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         workAdapter = new ActivityVideoAdapter(new ArrayList<>());
         recyclerView.setAdapter(workAdapter);
+        if (getArguments() != null) {
+            activityId = getArguments().getString("activityId");
+        }
 
         loadHotWorks();
         return view;
     }
 
     private void loadHotWorks() {
+        if (activityId == null) {
+            return;
+        }
+
         ApiService apiService = RetrofitClient.getInstance().create(ApiService.class);
-        apiService.getHotWorks().enqueue(new Callback<ActivityItem>() {
+        apiService.getHotWorksByActivityId(activityId).enqueue(new Callback<ActivityItem>() {
 
             @Override
             public void onResponse(Call<ActivityItem> call, Response<ActivityItem> response) {

@@ -3,7 +3,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.echostrings.R;
+import com.android.echostrings.activities.ActivityDetailActivity;
 import com.android.echostrings.data.ActivityItem;
 import com.android.echostrings.data.VideoItem;
 import com.bumptech.glide.Glide;
@@ -21,9 +23,12 @@ import java.util.List;
 public class ActivityEventAdapter extends RecyclerView.Adapter<ActivityEventAdapter.ViewHolder> {
 
     private List<ActivityItem> eventList;
+    private Context context;
 
-    public ActivityEventAdapter(List<ActivityItem> eventList) {
+    public ActivityEventAdapter(Context context,List<ActivityItem> eventList) {
+        this.context = context;
         this.eventList = eventList;
+
     }
 
     @NonNull
@@ -42,6 +47,11 @@ public class ActivityEventAdapter extends RecyclerView.Adapter<ActivityEventAdap
                 .load(event.getCoverUrl())
                 .into(holder.coverUrl);
         holder.status.setText(event.getStatus());
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ActivityDetailActivity.class);
+            intent.putExtra("activityId", event.getId());
+            context.startActivity(intent);
+        });
     }
 
     @Override

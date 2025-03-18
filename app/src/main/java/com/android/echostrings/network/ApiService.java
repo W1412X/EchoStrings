@@ -18,6 +18,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 
 public interface ApiService {
 
@@ -31,25 +32,25 @@ public interface ApiService {
     })
     @POST("/ai/music_creat")
     Call<MusicCreateResponse> createMusic(@Body MusicCreateRequest musicCreateRequest);
-    @GET("posts")
+    @GET("/post/list")
     Call<List<PostItem>> getPosts();
-    @GET("events")
+    @GET("/activity/list")
     Call<List<ActivityItem>> getEvents();
 
     @Multipart
-    @POST("posts")
+    @POST("/post/create")
     Call<PostItem> createPost(
             @Part("title") RequestBody title,
             @Part("content") RequestBody content,
             @Part MultipartBody.Part file1,
             @Part MultipartBody.Part file2
     );
-    @GET("activity/intro")
-    Call<ActivityItem> getActivityIntroduction();
+    @GET("activities/{id}/introduction")
+    Call<ActivityItem> getActivityIntroductionById(@Path("id") String activityId);
 
-    @GET("activity/hotWorks")
-    Call<ActivityItem> getHotWorks();
-    @GET("events?status_limit=3")
-    Call<ActivityItem> getEventsStatus();
+    @GET("activities/{id}/hotworks")
+    Call<ActivityItem> getHotWorksByActivityId(@Path("id") String activityId);
+    @GET("activities/{id}")
+    Call<ActivityItem> getEventDetails(@Path("id") String activityId);
 
 }

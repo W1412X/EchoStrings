@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.echostrings.activities.NewPostActivity;
 import com.android.echostrings.adapter.PostAdapter;
 import com.android.echostrings.data.PostItem;
+import com.android.echostrings.data.Work;
 import com.android.echostrings.network.ApiService;
 import com.android.echostrings.network.RetrofitClient;
 import com.google.android.material.button.MaterialButton;
@@ -42,6 +43,7 @@ import com.google.android.material.tabs.TabLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -130,6 +132,8 @@ public class SharePageFragment extends Fragment {
 
         recyclerView.setAdapter(adapter);
         apiService = RetrofitClient.getInstance().create(ApiService.class);
+        loadMockPosts();
+
 
         loadPosts(); // 加载帖子
 
@@ -155,6 +159,18 @@ public class SharePageFragment extends Fragment {
 
         return view;
     }
+    private void loadMockPosts() {
+        // 创建模拟的帖子数据
+        postList.clear();
+        postList.add(new PostItem("User1", "Title 1", "这是帖子内容1", "https://example.com/image1.jpg",
+                "https://example.com/video1.mp4", 1610000000, 120, 50, "https://example.com/avatar1.jpg"));
+        postList.add(new PostItem("User2", "Title 2", "这是帖子内容2", "https://example.com/image2.jpg",
+                "https://example.com/video2.mp4", 1610500000, 200, 75, "https://example.com/avatar2.jpg"));
+        postList.add(new PostItem("User3", "Title 3", "这是帖子内容3", "https://example.com/image3.jpg",
+                "https://example.com/video3.mp4", 1611000000, 300, 100, "https://example.com/avatar3.jpg"));
+
+        adapter.notifyDataSetChanged();
+    }
 
 
 
@@ -171,6 +187,7 @@ public class SharePageFragment extends Fragment {
         tabDots = view.findViewById(R.id.tabDots);
         quickAccessLayout = view.findViewById(R.id.quickAccessLayout);
         postRecyclerView = view.findViewById(R.id.postRecyclerView);
+        loadTestData();
 
 
         setupBannerSlider();
@@ -224,6 +241,34 @@ public class SharePageFragment extends Fragment {
             }
         }
     }
+    private void loadTestData() {
+        // 创建多个测试数据，模拟活动数据
+        List<Work> hotWorks1 = Arrays.asList(
+                new Work("星空", "4:23", "gs", "https://example.com/work1")
+        );
+        List<Work> hotWorks2 = Arrays.asList(
+                new Work("海洋探险", "3:45", "hg", "https://example.com/work2")
+        );
+        List<Work> hotWorks3 = Arrays.asList(
+                new Work("极限挑战", "5:30", "jl", "https://example.com/work3")
+        );
+        List<Work> hotWorks4 = Arrays.asList(
+                new Work("未来科技", "6:00", "wt", "https://example.com/work4")
+        );
+
+        // 添加活动数据到activityItems列表
+        activityItems.add(new ActivityItem("1", "活动 1", "2035.2.3-20256.3", "进行中", "", 100, "", hotWorks1));
+        activityItems.add(new ActivityItem("2", "活动 2", "2035.3.1-20256.5", "已结束", "", 150, "", hotWorks2));
+        activityItems.add(new ActivityItem("3", "活动 3", "2035.4.10-20256.7", "进行中", "", 200, "", hotWorks3));
+        activityItems.add(new ActivityItem("4", "活动 4", "2035.5.20-20256.9", "即将开始", "", 250, "", hotWorks4));
+
+        // 通知适配器数据已经更新
+        adapter.notifyDataSetChanged();
+
+        // 更新活动数据到横幅显示
+        setupBannerSlider(); // 在数据更新后调用setupBannerSlider
+    }
+
 
     private void setupBannerSlider() {
         if (activityItems.isEmpty()) return;
@@ -350,6 +395,8 @@ public class SharePageFragment extends Fragment {
         }
         return true;
     }
+
+
 
 
 

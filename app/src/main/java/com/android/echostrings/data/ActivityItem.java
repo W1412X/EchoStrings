@@ -1,8 +1,11 @@
 package com.android.echostrings.data;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.util.List;
 
 public class ActivityItem {
+    private String id;
     private String title;
     private String time;
     private String status;
@@ -11,7 +14,7 @@ public class ActivityItem {
     private String activityIntroduction;
     private List<Work> hotwork;
 
-    public ActivityItem(String title, String time, String status, String coverUrl, int participants, String activityIntroduction, List<Work> hotwork) {
+    public ActivityItem(String id,String title, String time, String status, String coverUrl, int participants, String activityIntroduction, List<Work> hotwork) {
         this.title = title;
         this.time = time;
         this.status = status;
@@ -19,6 +22,9 @@ public class ActivityItem {
         this.participants = participants;
         this.activityIntroduction = activityIntroduction;
         this.hotwork = hotwork;
+    }
+    public String getId() {
+        return id;
     }
 
     public String getTitle() {
@@ -48,4 +54,5 @@ public class ActivityItem {
     public List<Work> getHotwork() {
         return hotwork;
     }
+
 }

@@ -24,6 +24,7 @@ import retrofit2.Response;
 
 public class ActivityIntroFragment extends Fragment {
     private WebView webView;
+    private String activityId;
 
 
     public ActivityIntroFragment() {}
@@ -39,14 +40,20 @@ public class ActivityIntroFragment extends Fragment {
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
         webView.setWebViewClient(new WebViewClient());
+        if (getArguments() != null) {
+            activityId = getArguments().getString("activityId");
+        }
 
         loadActivityIntroduction();
         return view;
     }
 
     private void loadActivityIntroduction() {
+        if (activityId == null) {
+            return;
+        }
         ApiService apiService = RetrofitClient.getInstance().create(ApiService.class);
-        apiService.getActivityIntroduction().enqueue(new Callback<ActivityItem>() {
+        apiService.getActivityIntroductionById(activityId).enqueue(new Callback<ActivityItem>() {
             @Override
             public void onResponse(Call<ActivityItem> call, Response<ActivityItem> response) {
                 if (response.isSuccessful() && response.body() != null) {

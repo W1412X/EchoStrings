@@ -2,6 +2,8 @@ package com.android.echostrings.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+import androidx.fragment.app.Fragment;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +16,7 @@ import com.android.echostrings.data.ActivityItem;
 import com.android.echostrings.fragments.ActivityIntroFragment;
 import com.android.echostrings.fragments.HotWorksFragment;
 import com.android.echostrings.network.ApiService;
+import com.android.echostrings.network.RetrofitClient;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -32,6 +35,8 @@ public class ActivityDetailActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager2 viewPager;
     private MaterialButton btnSubmit;
+    private String activityId;
+
     private TextView eventStatus;
 
     @Override
@@ -43,11 +48,22 @@ public class ActivityDetailActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
         btnSubmit = findViewById(R.id.btnSubmit);
+        activityId = getIntent().getStringExtra("activityId");
 
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add(new ActivityIntroFragment());
-        fragments.add(new HotWorksFragment());
-        loadEventStatus();
+        ActivityIntroFragment introFragment = new ActivityIntroFragment();
+        HotWorksFragment worksFragment = new HotWorksFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("activityId", activityId);  // 传递活动 ID
+        introFragment.setArguments(bundle);
+        worksFragment.setArguments(bundle);
+
+        fragments.add(introFragment);
+        fragments.add(worksFragment);
+        apiService = RetrofitClient.getInstance().create(ApiService.class);
+
+
 
         viewPager.setAdapter(new FragmentStateAdapter(this) {
             @NonNull
@@ -73,10 +89,16 @@ public class ActivityDetailActivity extends AppCompatActivity {
             Intent intent = new Intent(ActivityDetailActivity.this, SubmitWorkActivity.class);
             startActivity(intent);
         });
+
+        apiService = RetrofitClient.getInstance().create(ApiService.class);
+
+
+        loadEventDetails(activityId);
     }
-        private void loadEventStatus() {
-            ApiService apiService = retrofit.create(ApiService.class);
-            Call<ActivityItem> call = apiService.getEventsStatus();
+        private void loadEventDetails(String activityId) {
+
+            Call<ActivityItem> call = apiService.getEventDetails(activityId);
+
 
             call.enqueue(new Callback<ActivityItem>() {
                 @Override
